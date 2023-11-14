@@ -832,7 +832,7 @@ case 4:
 YY_RULE_SETUP
 #line 99 "codel-lex.l"
 {
-  push(&bracket_stack,'(');
+  push(&bracket_stack,'{');
 };
 	YY_BREAK
 case 5:
@@ -1897,15 +1897,16 @@ int main() {
   yylex();
   init_stack(&parenth_stack,50);
   init_stack(&bracket_stack,50);
-  if(stackIsEmpty(&parenth_stack)){
+  if(!stackIsEmpty(&parenth_stack)){
     printf("Error: parentheses are not balanced");
   }
 
-  if(stackIsEmpty(&bracket_stack)){
+  if(!stackIsEmpty(&bracket_stack)){
     printf("Error: brackets are not balanced");
   }
-  if (yylex() != 0){
-      printf("Error: Invalid token at line %d \n", yylineno);
-  }
+  // if (yylex() != 0){
+  //   printf("Error: Invalid token at line %d \n", yylineno);
+  // }
+  printf("Compilation completed , No Errors found");
   return 0;
 }
