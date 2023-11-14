@@ -70,7 +70,6 @@ constant_declaration:   CONST type_specifier assign_ins;
 condition_expression:   ID | INTEGER | REAL | condition_expression condition_operator condition_expression;
 arithmetic_expression:  sum | substraction | multiplication | division ;
 
-simple_variable:        type_specifier ID | type_specifier ID "," ID; 
 assign_ins:             ID ASSIGN_OP arithmetic_expression | ID ASSIGN_OP BOOL;
 
 for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition_expression COMMA counter PARENTH_CLOSE 
@@ -97,9 +96,21 @@ instruction:
                         | for_loop_ins 
                         | if_ins
 ;
-counter:                 ID PLUS PLUS | ID MINUS MINUS ; // ID has to be same as for loop variable, add more ops
-%%
+counter: ID PLUS PLUS   { /* handle i++ */ }
+       | ID MINUS MINUS { /* handle i-- */ }
+       | ID ASSIGN_OP ID { /* handle i := j */ }
+       | ID ASSIGN_OP ID MULT ID { /* handle i := j * k */ }
+       | ID ASSIGN_OP ID DIV ID  { /* handle i := j / k */ }
+       | ID ASSIGN_OP INTEGER { /* handle i := 5 */ }
+       ; 
 
+%%
+// forloop counter
+void checkCounterID(char* id) {
+    if (strcmp(id, storedID) != 0) {
+        fprintf(stderr, "Semantic error: Counter ID '%s' does not match loop head ID '%s'\n", id, storedID);
+    }
+}
 void yyerror(const char *s) {
     fprintf(stderr, "%s\n", s);
 }

@@ -4,12 +4,8 @@
 - comments
 - seperate to flex file and bison file
 ### TODO
-- CST (should) (have) (an) assign
-- bruh just ask chatgpt for more help
-- add nested for and if statements
 - add in for loops to check the condition statement
-- add OR AND OPERATORS
-- fix simple variable ,
+- add more depth to for loop counter
 - use yyleng
 - learn yylval
 routine symantique ; check symboles table
