@@ -46,7 +46,6 @@ double  real;
 %token IF
 %token ELSE
 
-%type <real> number
 %type <real> arithmetic_expression
 %type <real> expression
 
@@ -62,22 +61,23 @@ start:                  declaration_list BEGIN instruction_list END
                         | error {yyerror("Missing BEGIN or END");}
 ;
 declaration_list:       declaration_list declaration | ;
-declaration:            variable_declaration SEMICOLON | constant_declaration SEMICOLON 
+declaration:            variable_declaration SEMICOLON 
+                        | constant_declaration SEMICOLON 
                         | variable_declaration error { yyerror("Missing SEMICOLON after variable declaration");}
                         | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
 ;
-instruction_list:       instruction_list instruction | ;
+
+variable_declaration:   type_specifier identifier_list COLON ;
+constant_declaration:   CONST type_specifier assign_ins;
+
 type_specifier:         INT | FLOAT | BOOL;
+identifier_list:        ID | identifier_list COLON ID ;    
 
+expression: arithmetic_expression
+    | ID
+    | INTEGER
+    | REAL;
 
-expression: number
-          | arithmetic_expression
-          ;
-
-number: ID { $$ = strdup($1); free($1);}
-      | INTEGER { $$ = atoi($1); }
-      | REAL { $$ = atof($1); }
-      ;
 arithmetic_expression: expression PLUS expression { $$ = $1 + $3; }
                     | expression MINUS expression { $$ = $1 - $3; }
                     | expression MULT expression { $$ = $1 * $3; }
@@ -87,29 +87,21 @@ arithmetic_expression: expression PLUS expression { $$ = $1 + $3; }
                         else
                             $$ = $1 / $3;
                          }
-                    | MINUS expression %prec UMINUS { $$ = -($2); }  // Unary minus
+                    | MINUS arithmetic_expression %prec UMINUS { $$ = -($2); }  
+                    | ID { $$ = strdup($1); free($1);}
+                    | INTEGER { $$ = atoi($1); }
+                    | REAL { $$ = atof($1); }
                     ;
 
-variable_declaration:   type_specifier identifier_list COLON ;
-identifier_list:        ID | identifier_list COLON ID ;    
-constant_declaration:   CONST type_specifier assign_ins;
 
-condition:             expression_condition
-                    |   NOT condition %prec UMINUS
-                    |   PARENTH_OPEN condition PARENTH_CLOSE
-                    ;
+instruction_list:       instruction_list instruction | ;
 
-expression_condition:    expression_condition LESS expression_condition
-                    |   expression_condition GREATER expression_condition
-                    |   expression_condition NOTEQUAL expression_condition
-                    |   expression_condition LESSEQ expression_condition
-                    |   expression_condition GREATEQ expression_condition
-                    |   expression_condition EQUAL expression_condition
-                    |   ID
-                    |   INTEGER
-                    |   REAL
-                    ;
-assign_ins:             ID ASSIGN_OP arithmetic_expression | ID ASSIGN_OP BOOL;
+instruction:            
+                        | assign_ins SEMICOLON
+                        | assign_ins error { yyerror("Missing SEMICOLON after assign instruction");}
+                        | for_loop_ins 
+                        | if_ins
+;
 
 for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition COMMA counter PARENTH_CLOSE 
                         BRACKET_OPEN
@@ -120,6 +112,26 @@ for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition COMMA coun
                             instruction
                         BRACKET_CLOSE { yyerror("Missing COMMAS in forloop head"); }
 ;
+condition:             expression_condition
+                    |   NOT condition %prec UMINUS
+                    |   PARENTH_OPEN condition PARENTH_CLOSE
+                    ;
+
+expression_condition:    expression LESS expression
+                    |   expression GREATER expression
+                    |   expression NOTEQUAL expression
+                    |   expression LESSEQ expression
+                    |   expression GREATEQ expression
+                    |   expression EQUAL expression
+                    |   ID
+                    |   INTEGER
+                    |   REAL
+                    ;
+assign_ins:             ID ASSIGN_OP arithmetic_expression 
+                    | ID ASSIGN_OP BOOL
+                    ;
+
+
 if_ins:                 IF PARENTH_OPEN condition PARENTH_CLOSE
                         BRACKET_OPEN
                             instruction
@@ -129,12 +141,7 @@ if_ins:                 IF PARENTH_OPEN condition PARENTH_CLOSE
                         BRACKET_CLOSE ;
                   
 
-instruction:            
-                        | assign_ins SEMICOLON
-                        | assign_ins error { yyerror("Missing SEMICOLON after assign instruction");}
-                        | for_loop_ins 
-                        | if_ins
-;
+
 counter: ID PLUS PLUS { checkCounterID($1); /* handle i++ */ }
        | ID MINUS MINUS { checkCounterID($1); /* handle i-- */ }
        | ID ASSIGN_OP ID { checkCounterID($1); /* handle i := j */ }
