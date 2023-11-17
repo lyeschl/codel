@@ -1,6 +1,14 @@
 %{
 #include <stdio.h>
 // extern NODE *yyroot;
+extern int yylex();
+extern int yyparse();
+extern FILE* yyin;
+extern int yylineno;
+void yyerror(const char* msg) {
+    fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
+    exit(EXIT_FAILURE);
+}
 %}
 %locations
 
@@ -26,6 +34,14 @@ double  real;
 %token IF
 %token ELSE
 
+%type <entier> number
+%type <real> sum substraction multiplication division
+
+%left PLUS MINUS
+%left MULT DIV
+%left UMINUS  // Unary minus
+
+%start start
 %%
 
 start:                  declaration_list BEGIN instruction_list END
@@ -35,30 +51,26 @@ declaration_list:       declaration_list declaration | ;
 instruction_list:       instruction_list instruction | ;
 type_specifier:         INT | FLOAT | BOOL;
 
-arithmetic_operator:    PLUS | MINUS | MULT | DIV ;
-condition_operator:     LESS | GREATER | NOTEQUAL | LESSEQ | GREATEQ | EQUAL;
 
-number: ID { $$ = $1; }
-      | INTEGER { $$ = $1; }
-      | REAL { $$ = $1; }
+expression: number
+          | arithmetic_expression
+          ;
+
+number: ID { $$ = strdup($1); }
+      | INTEGER { $$ = atoi($1); }
+      | REAL { $$ = atof($1); }
       ;
-
-sum: number PLUS number { $$ = $1 + $3; }
-   ;
-
-substraction: number MINUS number { $$ = $1 - $3; }
-            ;
-
-multiplication: number MULT number { $$ = $1 * $3; }
-              ;
-
-division: number DIV number {
-            if ($3 == 0)
-                printf("Semantic error: Division by zero at line %d\n", yylineno);
-            else
-                $$ = $1 / $3;
-         }
-        ;
+arithmetic_expression: expression PLUS expression { $$ = $1 + $3; }
+                    | expression MINUS expression { $$ = $1 - $3; }
+                    | expression MULT expression { $$ = $1 * $3; }
+                    | expression DIV expression {
+                        if ($3 == 0)
+                            printf("Semantic error: Division by zero at line %d\n", yylineno);
+                        else
+                            $$ = $1 / $3;
+                         }
+                    | MINUS expression %prec UMINUS  // Unary minus
+                    ;
 declaration:            variable_declaration SEMICOLON | constant_declaration SEMICOLON 
                         | variable_declaration error { yyerror("Missing SEMICOLON after variable declaration");}
                         | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
@@ -67,9 +79,21 @@ variable_declaration:   type_specifier identifier_list COLON ;
 identifier_list:        ID | identifier_list COLON ID ;    
 constant_declaration:   CONST type_specifier assign_ins;
 
-condition_expression:   ID | INTEGER | REAL | condition_expression condition_operator condition_expression;
-arithmetic_expression:  sum | substraction | multiplication | division ;
+condition:             expression_condition
+                    |   NOT condition %prec UMINUS
+                    |   PARENTH_OPEN condition PARENTH_CLOSE
+                    ;
 
+expression_condition:    expression_condition LESS expression_condition
+                    |   expression_condition GREATER expression_condition
+                    |   expression_condition NOTEQUAL expression_condition
+                    |   expression_condition LESSEQ expression_condition
+                    |   expression_condition GREATEQ expression_condition
+                    |   expression_condition EQUAL expression_condition
+                    |   ID
+                    |   INTEGER
+                    |   REAL
+                    ;
 assign_ins:             ID ASSIGN_OP arithmetic_expression | ID ASSIGN_OP BOOL;
 
 for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition_expression COMMA counter PARENTH_CLOSE 
@@ -110,9 +134,6 @@ void checkCounterID(char* id) {
     if (strcmp(id, storedID) != 0) {
         fprintf(stderr, "Semantic error: Counter ID '%s' does not match loop head ID '%s'\n", id, storedID);
     }
-}
-void yyerror(const char *s) {
-    fprintf(stderr, "%s\n", s);
 }
 int main() {
     yyparse();

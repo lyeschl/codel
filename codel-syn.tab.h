@@ -54,30 +54,76 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    DIGIT = 258,                   /* DIGIT  */
-    BOOL = 259,                    /* BOOL  */
-    OPERATOR = 260,                /* OPERATOR  */
-    LETTER = 261,                  /* LETTER  */
-    INTEGER = 262,                 /* INTEGER  */
-    REAL = 263,                    /* REAL  */
-    STRING1 = 264,                 /* STRING1  */
-    STRING2 = 265,                 /* STRING2  */
-    ID = 266,                      /* ID  */
-    COMM = 267                     /* COMM  */
+    BEGIN = 258,                   /* BEGIN  */
+    END = 259,                     /* END  */
+    CONST = 260,                   /* CONST  */
+    BOOL = 261,                    /* BOOL  */
+    INT = 262,                     /* INT  */
+    FLOAT = 263,                   /* FLOAT  */
+    PLUS = 264,                    /* PLUS  */
+    MINUS = 265,                   /* MINUS  */
+    MULT = 266,                    /* MULT  */
+    DIV = 267,                     /* DIV  */
+    LESS = 268,                    /* LESS  */
+    GREATER = 269,                 /* GREATER  */
+    NOTEQUAL = 270,                /* NOTEQUAL  */
+    LESSEQ = 271,                  /* LESSEQ  */
+    GREATEQ = 272,                 /* GREATEQ  */
+    EQUAL = 273,                   /* EQUAL  */
+    NOT = 274,                     /* NOT  */
+    PARENTH_OPEN = 275,            /* PARENTH_OPEN  */
+    PARENTH_CLOSE = 276,           /* PARENTH_CLOSE  */
+    BRACKET_OPEN = 277,            /* BRACKET_OPEN  */
+    BRACKET_CLOSE = 278,           /* BRACKET_CLOSE  */
+    ASSIGN_OP = 279,               /* ASSIGN_OP  */
+    INTEGER = 280,                 /* INTEGER  */
+    REAL = 281,                    /* REAL  */
+    ID = 282,                      /* ID  */
+    COMMA = 283,                   /* COMMA  */
+    COLON = 284,                   /* COLON  */
+    SEMICOLON = 285,               /* SEMICOLON  */
+    FOR = 286,                     /* FOR  */
+    IF = 287,                      /* IF  */
+    ELSE = 288                     /* ELSE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 7 "codel-syn.y"
+
+int     entier;
+char*   str;
+double  real;
+
+#line 103 "codel-syn.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
+{
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
+};
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
+#endif
+
 
 extern YYSTYPE yylval;
-
+extern YYLTYPE yylloc;
 
 int yyparse (void);
 

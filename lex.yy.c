@@ -373,8 +373,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 10
-#define YY_END_OF_BUFFER 11
+#define YY_NUM_RULES 12
+#define YY_END_OF_BUFFER 13
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -382,10 +382,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[17] =
+static const flex_int16_t yy_accept[22] =
     {   0,
-        0,    0,   11,    8,    6,    7,    2,    3,    8,    4,
-        5,    1,    1,    0,    9,    0
+        0,    0,   13,   10,    8,    9,    4,    5,   10,    2,
+       10,    6,    7,    2,    0,    1,    1,    0,   11,    3,
+        0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -394,16 +395,16 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
-        5,    1,    1,    1,    1,    1,    1,    6,    6,    6,
-        6,    6,    6,    6,    6,    6,    6,    1,    1,    1,
-        1,    1,    1,    1,    7,    7,    7,    7,    7,    7,
-        7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
-        7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
-        1,    1,    1,    1,    8,    1,    7,    7,    7,    7,
+        5,    1,    6,    1,    6,    7,    1,    8,    8,    8,
+        8,    8,    8,    8,    8,    8,    8,    1,    1,    1,
+        1,    1,    1,    1,    9,    9,    9,    9,    9,    9,
+        9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
+        9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
+        1,    1,    1,    1,   10,    1,    9,    9,    9,    9,
 
-        7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
-        7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
-        7,    7,    9,    1,   10,    1,    1,    1,    1,    1,
+        9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
+        9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
+        9,    9,   11,    1,   12,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -420,41 +421,46 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[11] =
-    {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1
-    } ;
-
-static const flex_int16_t yy_base[18] =
-    {   0,
-        0,    0,   17,   18,   18,   18,   18,   18,    5,    6,
-       18,   18,   18,    5,   18,   18,   13
-    } ;
-
-static const flex_int16_t yy_def[18] =
-    {   0,
-       16,    1,   16,   16,   16,   16,   16,   16,   16,   17,
-       16,   16,   16,   17,   16,    0,   16
-    } ;
-
-static const flex_int16_t yy_nxt[29] =
-    {   0,
-        4,    5,    6,    7,    8,    4,    9,    4,   10,   11,
-       12,   12,   13,   14,   15,   15,   16,    3,   16,   16,
-       16,   16,   16,   16,   16,   16,   16,   16
-    } ;
-
-static const flex_int16_t yy_chk[29] =
+static const YY_CHAR yy_meta[13] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        9,    9,    9,   17,   14,   10,    3,   16,   16,   16,
-       16,   16,   16,   16,   16,   16,   16,   16
+        1,    1
+    } ;
+
+static const flex_int16_t yy_base[23] =
+    {   0,
+        0,    0,   23,   24,   24,   24,   24,   24,   14,    6,
+        7,    9,   24,    0,   12,   24,   24,    7,   24,   24,
+       24,   17
+    } ;
+
+static const flex_int16_t yy_def[23] =
+    {   0,
+       21,    1,   21,   21,   21,   21,   21,   21,   21,   21,
+       21,   22,   21,   10,   21,   21,   21,   22,   21,   21,
+        0,   21
+    } ;
+
+static const flex_int16_t yy_nxt[37] =
+    {   0,
+        4,    5,    6,    7,    8,    9,    4,   10,   11,    4,
+       12,   13,   15,   14,   16,   16,   17,   18,   19,   20,
+       19,   14,   21,    3,   21,   21,   21,   21,   21,   21,
+       21,   21,   21,   21,   21,   21
+    } ;
+
+static const flex_int16_t yy_chk[37] =
+    {   0,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,   10,   10,   11,   11,   11,   22,   18,   15,
+       12,    9,    3,   21,   21,   21,   21,   21,   21,   21,
+       21,   21,   21,   21,   21,   21
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[11] =
+static const flex_int32_t yy_rule_can_match_eol[13] =
     {   0,
-0, 0, 0, 0, 0, 0, 1, 0, 1, 0,     };
+0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -474,47 +480,49 @@ char *yytext;
 #line 2 "codel-lex.l"
 #include "codel-syn.tab.h"
 #include <stdio.h>
-#include<stdbool.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+
 int current_line = 1;
 
-// int opened_parenth=0;
-// int closed_parenth=0;
-// 
-// int opened_bracket=0;
-// int closed_bracket=0;
-
-// stack data structure used to assure that open and closed brackets and parenths are equal
 typedef struct stack {
   char *data;
   int top;
   int size;
 } stack;
+
 void init_stack(stack *s, int size) {
   s->data = malloc(sizeof(char) * size);
   s->top = -1;
   s->size = size;
 }
-bool stackIsEmpty(stack *s){
-    return s->top==-1;
+
+bool stackIsEmpty(stack *s) {
+  return s->top == -1;
 }
+
 void push(stack *s, char c) {
   if (s->top == s->size - 1) {
     printf("Stack overflow\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   s->data[++s->top] = c;
 }
+
 char pop(stack *s) {
   if (s->top == -1) {
     printf("Stack underflow\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   return s->data[s->top--];
 }
+
 stack parenth_stack;
 stack bracket_stack;
-#line 516 "lex.yy.c"
-#line 517 "lex.yy.c"
+
+#line 524 "lex.yy.c"
+#line 525 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -731,11 +739,10 @@ YY_DECL
 		}
 
 	{
-#line 80 "codel-lex.l"
+#line 85 "codel-lex.l"
 
 
-
-#line 738 "lex.yy.c"
+#line 745 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -762,13 +769,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 17 )
+				if ( yy_current_state >= 22 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 18 );
+		while ( yy_base[yy_current_state] != 24 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -804,77 +811,116 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 83 "codel-lex.l"
+#line 87 "codel-lex.l"
 {
-  if(yyleng<=10){
+  if (yyleng <= 10) {
+    yylval.str = strdup(yytext); // Allocating memory and copying the identifier
+    printf("ID\t%s\tLine %d\n", yylval.str, current_line);
     return ID;
-  }else{
-    printf("Error: identifier cannot be longer than 10 chars");
+  } else {
+    printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
+    exit(EXIT_FAILURE);
   }
-  
-};         
+}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 91 "codel-lex.l"
+#line 98 "codel-lex.l"
 {
-  push(&parenth_stack,'(');
-};
+  yylval.entier = atoi(yytext);
+  printf("INTEGER\t%d\tLine %d\n", yylval.entier, current_line);
+  return INTEGER;
+}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 95 "codel-lex.l"
+#line 104 "codel-lex.l"
 {
-  pop(&parenth_stack);
-};
+  // Assuming yylval.real is a double in your union
+  yylval.real = atof(yytext);
+  printf("REAL\t%f\tLine %d\n", yylval.real, current_line);
+  return REAL;
+}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 99 "codel-lex.l"
+#line 111 "codel-lex.l"
 {
-  push(&bracket_stack,'{');
-};
+  push(&parenth_stack, '(');
+  printf("PARENTH_OPEN\t%s\tLine %d\n", yytext, current_line);
+  return PARENTH_OPEN;
+}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 103 "codel-lex.l"
+#line 117 "codel-lex.l"
 {
-  pop(&bracket_stack);
-};
+  if (stackIsEmpty(&parenth_stack)) {
+    printf("Error: Unmatched closing parenthesis '%s' at line %d\n", yytext, current_line);
+    exit(EXIT_FAILURE);
+  }
+  pop(&parenth_stack);
+  printf("PARENTH_CLOSE\t%s\tLine %d\n", yytext, current_line);
+  return PARENTH_CLOSE;
+}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 106 "codel-lex.l"
-
+#line 127 "codel-lex.l"
+{
+  push(&bracket_stack, '{');
+  printf("BRACKET_OPEN\t%s\tLine %d\n", yytext, current_line);
+  return BRACKET_OPEN;
+}
 	YY_BREAK
 case 7:
-/* rule 7 can match eol */
 YY_RULE_SETUP
-#line 107 "codel-lex.l"
-{current_line++;}
+#line 133 "codel-lex.l"
+{
+  if (stackIsEmpty(&bracket_stack)) {
+    printf("Error: Unmatched closing bracket '%s' at line %d\n", yytext, current_line);
+    exit(EXIT_FAILURE);
+  }
+  pop(&bracket_stack);
+  printf("BRACKET_CLOSE\t%s\tLine %d\n", yytext, current_line);
+  return BRACKET_CLOSE;
+}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 108 "codel-lex.l"
-{ /* Ignore all other characters */ }
+#line 143 "codel-lex.l"
+
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 109 "codel-lex.l"
+#line 144 "codel-lex.l"
 {
-  printf("comment detected at line %d",current_line);
-  for(int i = 0 ; i<strlen(yytext);i++)
-    if(yytext[i] == '\n')
-      ++current_line;
+  current_line++;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 115 "codel-lex.l"
+#line 148 "codel-lex.l"
+{
+  printf("Error: Invalid character '%s' at line %d\n", yytext, current_line);
+  exit(EXIT_FAILURE);
+}
+	YY_BREAK
+case 11:
+/* rule 11 can match eol */
+YY_RULE_SETUP
+#line 153 "codel-lex.l"
+{
+  printf("COMMENT\t%s\tLine %d\n", yytext, current_line);
+}
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 157 "codel-lex.l"
 ECHO;
 	YY_BREAK
-#line 877 "lex.yy.c"
+#line 923 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1171,7 +1217,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 17 )
+			if ( yy_current_state >= 22 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1199,11 +1245,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 17 )
+		if ( yy_current_state >= 22 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 16);
+	yy_is_jam = (yy_current_state == 21);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1891,22 +1937,24 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 115 "codel-lex.l"
+#line 157 "codel-lex.l"
 
 int main() {
+  init_stack(&parenth_stack, 50);
+  init_stack(&bracket_stack, 50);
   yylex();
-  init_stack(&parenth_stack,50);
-  init_stack(&bracket_stack,50);
-  if(!stackIsEmpty(&parenth_stack)){
-    printf("Error: parentheses are not balanced");
+
+  if (!stackIsEmpty(&parenth_stack)) {
+    printf("Error: Parentheses are not balanced\n");
+    exit(EXIT_FAILURE);
   }
 
-  if(!stackIsEmpty(&bracket_stack)){
-    printf("Error: brackets are not balanced");
+  if (!stackIsEmpty(&bracket_stack)) {
+    printf("Error: Brackets are not balanced\n");
+    exit(EXIT_FAILURE);
   }
-  // if (yylex() != 0){
-  //   printf("Error: Invalid token at line %d \n", yylineno);
-  // }
-  printf("Compilation completed , No Errors found");
+
+  printf("Compilation completed, No Errors found\n");
   return 0;
 }
+
