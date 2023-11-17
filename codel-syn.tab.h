@@ -94,7 +94,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 25 "codel-syn.y"
+#line 27 "codel-syn.y"
 
 int     entier;
 char*   str;

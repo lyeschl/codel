@@ -1,7 +1,9 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "symbol_table.h"
 // extern NODE *yyroot;
+SymbolTable* symbolTable;
 #define EXIT_FAILURE 1
 char* storedID;
 
@@ -144,8 +146,10 @@ counter: ID PLUS PLUS { checkCounterID($1); /* handle i++ */ }
 %%
 
 int main() {
+    symbolTable = createSymbolTable();
     yyparse();
     // print_tree(yyroot);
+    printSymbolTable(symbolTable);  // Print the symbol table at the end
     return 0;
 }
 
