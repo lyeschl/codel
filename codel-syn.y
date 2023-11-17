@@ -1,10 +1,20 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
 // extern NODE *yyroot;
+#define EXIT_FAILURE 1
+char* storedID;
+
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
 extern int yylineno;
+// forloop counter
+void checkCounterID(char* id) {
+    if (strcmp(id, storedID) != 0) {
+        fprintf(stderr, "Semantic error: Counter ID '%s' does not match loop head ID '%s'\n", id, storedID);
+    }
+}
 void yyerror(const char* msg) {
     fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
     exit(EXIT_FAILURE);
@@ -34,8 +44,10 @@ double  real;
 %token IF
 %token ELSE
 
-%type <entier> number
-%type <real> sum substraction multiplication division
+%type <real> number
+%type <real> arithmetic_expression
+%type <real> expression
+
 
 %left PLUS MINUS
 %left MULT DIV
@@ -48,6 +60,10 @@ start:                  declaration_list BEGIN instruction_list END
                         | error {yyerror("Missing BEGIN or END");}
 ;
 declaration_list:       declaration_list declaration | ;
+declaration:            variable_declaration SEMICOLON | constant_declaration SEMICOLON 
+                        | variable_declaration error { yyerror("Missing SEMICOLON after variable declaration");}
+                        | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
+;
 instruction_list:       instruction_list instruction | ;
 type_specifier:         INT | FLOAT | BOOL;
 
@@ -56,7 +72,7 @@ expression: number
           | arithmetic_expression
           ;
 
-number: ID { $$ = strdup($1); }
+number: ID { $$ = strdup($1); free($1);}
       | INTEGER { $$ = atoi($1); }
       | REAL { $$ = atof($1); }
       ;
@@ -69,12 +85,9 @@ arithmetic_expression: expression PLUS expression { $$ = $1 + $3; }
                         else
                             $$ = $1 / $3;
                          }
-                    | MINUS expression %prec UMINUS  // Unary minus
+                    | MINUS expression %prec UMINUS { $$ = -($2); }  // Unary minus
                     ;
-declaration:            variable_declaration SEMICOLON | constant_declaration SEMICOLON 
-                        | variable_declaration error { yyerror("Missing SEMICOLON after variable declaration");}
-                        | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
-;
+
 variable_declaration:   type_specifier identifier_list COLON ;
 identifier_list:        ID | identifier_list COLON ID ;    
 constant_declaration:   CONST type_specifier assign_ins;
@@ -96,16 +109,16 @@ expression_condition:    expression_condition LESS expression_condition
                     ;
 assign_ins:             ID ASSIGN_OP arithmetic_expression | ID ASSIGN_OP BOOL;
 
-for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition_expression COMMA counter PARENTH_CLOSE 
+for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition COMMA counter PARENTH_CLOSE 
                         BRACKET_OPEN
                             instruction
                         BRACKET_CLOSE
-                        | FOR PARENTH_OPEN ID ASSIGN_OP error condition_expression error counter PARENTH_CLOSE 
+                        | FOR PARENTH_OPEN ID ASSIGN_OP error condition error counter PARENTH_CLOSE 
                         BRACKET_OPEN
                             instruction
                         BRACKET_CLOSE { yyerror("Missing COMMAS in forloop head"); }
 ;
-if_ins:                 IF PARENTH_OPEN condition_expression PARENTH_CLOSE
+if_ins:                 IF PARENTH_OPEN condition PARENTH_CLOSE
                         BRACKET_OPEN
                             instruction
                         BRACKET_CLOSE
@@ -120,21 +133,16 @@ instruction:
                         | for_loop_ins 
                         | if_ins
 ;
-counter: ID PLUS PLUS   { /* handle i++ */ }
-       | ID MINUS MINUS { /* handle i-- */ }
-       | ID ASSIGN_OP ID { /* handle i := j */ }
-       | ID ASSIGN_OP ID MULT ID { /* handle i := j * k */ }
-       | ID ASSIGN_OP ID DIV ID  { /* handle i := j / k */ }
-       | ID ASSIGN_OP INTEGER { /* handle i := 5 */ }
-       ; 
+counter: ID PLUS PLUS { checkCounterID($1); /* handle i++ */ }
+       | ID MINUS MINUS { checkCounterID($1); /* handle i-- */ }
+       | ID ASSIGN_OP ID { checkCounterID($1); /* handle i := j */ }
+       | ID ASSIGN_OP ID MULT ID { checkCounterID($1); /* handle i := j * k */ }
+       | ID ASSIGN_OP ID DIV ID  { checkCounterID($1); /* handle i := j / k */ }
+       | ID ASSIGN_OP INTEGER { checkCounterID($1); /* handle i := 5 */ }
+       | error { yyerror("inappropriate counter in forloop");} 
 
 %%
-// forloop counter
-void checkCounterID(char* id) {
-    if (strcmp(id, storedID) != 0) {
-        fprintf(stderr, "Semantic error: Counter ID '%s' does not match loop head ID '%s'\n", id, storedID);
-    }
-}
+
 int main() {
     yyparse();
     // print_tree(yyroot);

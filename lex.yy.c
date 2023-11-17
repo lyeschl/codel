@@ -481,9 +481,10 @@ char *yytext;
 #include "codel-syn.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
+#include <stdbool.h>
 
+extern YYSTYPE yylval;
 int current_line = 1;
 
 typedef struct stack {
@@ -521,8 +522,8 @@ char pop(stack *s) {
 stack parenth_stack;
 stack bracket_stack;
 
-#line 524 "lex.yy.c"
 #line 525 "lex.yy.c"
+#line 526 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -739,10 +740,10 @@ YY_DECL
 		}
 
 	{
-#line 85 "codel-lex.l"
+#line 86 "codel-lex.l"
 
 
-#line 745 "lex.yy.c"
+#line 746 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -811,7 +812,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 87 "codel-lex.l"
+#line 88 "codel-lex.l"
 {
   if (yyleng <= 10) {
     yylval.str = strdup(yytext); // Allocating memory and copying the identifier
@@ -825,7 +826,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 98 "codel-lex.l"
+#line 99 "codel-lex.l"
 {
   yylval.entier = atoi(yytext);
   printf("INTEGER\t%d\tLine %d\n", yylval.entier, current_line);
@@ -834,9 +835,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 104 "codel-lex.l"
+#line 105 "codel-lex.l"
 {
-  // Assuming yylval.real is a double in your union
+  // yylval.real is a double 
   yylval.real = atof(yytext);
   printf("REAL\t%f\tLine %d\n", yylval.real, current_line);
   return REAL;
@@ -844,7 +845,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 111 "codel-lex.l"
+#line 112 "codel-lex.l"
 {
   push(&parenth_stack, '(');
   printf("PARENTH_OPEN\t%s\tLine %d\n", yytext, current_line);
@@ -853,7 +854,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 117 "codel-lex.l"
+#line 118 "codel-lex.l"
 {
   if (stackIsEmpty(&parenth_stack)) {
     printf("Error: Unmatched closing parenthesis '%s' at line %d\n", yytext, current_line);
@@ -866,7 +867,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 127 "codel-lex.l"
+#line 128 "codel-lex.l"
 {
   push(&bracket_stack, '{');
   printf("BRACKET_OPEN\t%s\tLine %d\n", yytext, current_line);
@@ -875,7 +876,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 133 "codel-lex.l"
+#line 134 "codel-lex.l"
 {
   if (stackIsEmpty(&bracket_stack)) {
     printf("Error: Unmatched closing bracket '%s' at line %d\n", yytext, current_line);
@@ -888,20 +889,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 143 "codel-lex.l"
+#line 144 "codel-lex.l"
 
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 144 "codel-lex.l"
+#line 145 "codel-lex.l"
 {
   current_line++;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 148 "codel-lex.l"
+#line 149 "codel-lex.l"
 {
   printf("Error: Invalid character '%s' at line %d\n", yytext, current_line);
   exit(EXIT_FAILURE);
@@ -910,17 +911,17 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 153 "codel-lex.l"
+#line 154 "codel-lex.l"
 {
   printf("COMMENT\t%s\tLine %d\n", yytext, current_line);
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 157 "codel-lex.l"
+#line 158 "codel-lex.l"
 ECHO;
 	YY_BREAK
-#line 923 "lex.yy.c"
+#line 924 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1937,9 +1938,20 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 157 "codel-lex.l"
+#line 158 "codel-lex.l"
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s inputfile.txt\n", argv[0]);
+        return 1;
+    }
+
+    FILE *inputFile = fopen(argv[1], "r");
+
+    if (inputFile == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
   init_stack(&parenth_stack, 50);
   init_stack(&bracket_stack, 50);
   yylex();
@@ -1955,6 +1967,9 @@ int main() {
   }
 
   printf("Compilation completed, No Errors found\n");
+
+  fclose(inputFile);
+
   return 0;
 }
 

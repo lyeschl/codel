@@ -84,7 +84,8 @@ extern int yydebug;
     SEMICOLON = 285,               /* SEMICOLON  */
     FOR = 286,                     /* FOR  */
     IF = 287,                      /* IF  */
-    ELSE = 288                     /* ELSE  */
+    ELSE = 288,                    /* ELSE  */
+    UMINUS = 289                   /* UMINUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -93,13 +94,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 7 "codel-syn.y"
+#line 25 "codel-syn.y"
 
 int     entier;
 char*   str;
 double  real;
 
-#line 103 "codel-syn.tab.h"
+#line 104 "codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

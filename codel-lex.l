@@ -2,9 +2,10 @@
 #include "codel-syn.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
+#include <stdbool.h>
 
+extern YYSTYPE yylval;
 int current_line = 1;
 
 typedef struct stack {
@@ -102,7 +103,7 @@ ELSE               "else"
 }
 
 {REAL} {
-  // Assuming yylval.real is a double in your union
+  // yylval.real is a double 
   yylval.real = atof(yytext);
   printf("REAL\t%f\tLine %d\n", yylval.real, current_line);
   return REAL;
