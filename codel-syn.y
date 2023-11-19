@@ -28,9 +28,11 @@ void yyerror(const char* msg) {
 int     entier;
 char*   str;
 double  real;
+bool    boolean;
 }
 
 %token BEGIN END CONST
+%token TRUE FALSE
 %token BOOL INT FLOAT  
 %token PLUS MINUS MULT DIV  
 %token LESS GREATER NOTEQUAL LESSEQ GREATEQ EQUAL   
@@ -67,14 +69,32 @@ declaration:            variable_declaration SEMICOLON
                         | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
 ;
 
-variable_declaration:   type_specifier identifier_list COLON ;
+variable_declaration: type_specifier identifier_list COLON ;
 constant_declaration:   CONST type_specifier assign_ins;
 
 type_specifier:         INT | FLOAT | BOOL;
-identifier_list:        ID | identifier_list COLON ID ;    
+identifier_list:        ID 
+                            {
+                                if (searchSymbol(symbolTable, $1) == NULL) {
+            yyerror("Undeclared variable used in assignment");
+        }
+                            insertSymbol(symbolTable,$1)
+                            }
+| identifier_list COLON ID
+        {
+            if (searchSymbol(symbolTable, $1) == NULL) {
+            yyerror("Undeclared variable used in assignment");
+        } ;    
 
-expression: arithmetic_expression
+
+        }
+            expression: arithmetic_expression
     | ID
+    {
+        if (searchSymbol(symbolTable, $1) == NULL) {
+            yyerror("Undeclared variable used in assignment");
+        }
+    }
     | INTEGER
     | REAL;
 
@@ -116,7 +136,7 @@ condition:             expression_condition
                     |   NOT condition %prec UMINUS
                     |   PARENTH_OPEN condition PARENTH_CLOSE
                     ;
-
+s=
 expression_condition:    expression LESS expression
                     |   expression GREATER expression
                     |   expression NOTEQUAL expression
@@ -128,7 +148,13 @@ expression_condition:    expression LESS expression
                     |   REAL
                     ;
 assign_ins:             ID ASSIGN_OP arithmetic_expression 
-                    | ID ASSIGN_OP BOOL
+                    | ID ASSIGN_OP TRUE
+                    | ID ASSIGN_OP FALSE {
+                    if (searchSymbol(symbolTable, $1) == NULL) {
+                    yyerror("Undeclared variable used in assignment");
+                    }
+                    }
+                    
                     ;
 
 

@@ -15,6 +15,7 @@ use fopen to read from text file
 - Q:does my grammar has to be LL(1) , so that it doesnt , recursive gauche  
 - A: no it doesn't have to be LL or LR but it must be written in a way to resolve the shift/reduce conflicts
 ### TODO
+- the user might use a variable in an instruction that he hasn't declared, so every ID in the instructions must be checked
 - resolve the last conflicts
 - add bool to 
 - can i remove the 40 shift/reduce conflicts by optimizing the grammar

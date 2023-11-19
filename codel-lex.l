@@ -1,5 +1,6 @@
 %{
 #include "codel-syn.tab.h"
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,38 +8,6 @@
 
 extern YYSTYPE yylval;
 int current_line = 1;
-
-typedef struct stack {
-  char *data;
-  int top;
-  int size;
-} stack;
-
-void init_stack(stack *s, int size) {
-  s->data = malloc(sizeof(char) * size);
-  s->top = -1;
-  s->size = size;
-}
-
-bool stackIsEmpty(stack *s) {
-  return s->top == -1;
-}
-
-void push(stack *s, char c) {
-  if (s->top == s->size - 1) {
-    printf("Stack overflow\n");
-    exit(EXIT_FAILURE);
-  }
-  s->data[++s->top] = c;
-}
-
-char pop(stack *s) {
-  if (s->top == -1) {
-    printf("Stack underflow\n");
-    exit(EXIT_FAILURE);
-  }
-  return s->data[s->top--];
-}
 
 stack parenth_stack;
 stack bracket_stack;
@@ -50,7 +19,9 @@ stack bracket_stack;
 
 LETTER             [a-zA-Z]
 DIGIT              [0-9]
-ID                 {LETTER}({LETTER}|{DIGIT}|"_"{1}) 
+TRUE               "True"
+FALSE              "False"
+ID                 [a-zA-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
 INTEGER            [-+]?({DIGIT})+
 REAL               [-+]?{DIGIT}+"."{DIGIT}
 COMMENT            \{[^}]*\}
@@ -85,17 +56,12 @@ ELSE               "else"
 
 %%
 
-{ID} {
-  if (yyleng <= 10) {
-    yylval.str = strdup(yytext); // Allocating memory and copying the identifier
-    printf("ID\t%s\tLine %d\n", yylval.str, current_line);
-    return ID;
-  } else {
-    printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
-    exit(EXIT_FAILURE);
-  }
+{BEGIN} {
+  return "BEGIN";
 }
-
+{END} {
+  return "END";
+}
 {INTEGER} {
   yylval.entier = atoi(yytext);
   printf("INTEGER\t%d\tLine %d\n", yylval.entier, current_line);
@@ -105,23 +71,19 @@ ELSE               "else"
 {REAL} {
   // yylval.real is a double 
   yylval.real = atof(yytext);
-  printf("REAL\t%f\tLine %d\n", yylval.real, current_line);
   return REAL;
 }
 
 {PARENTH_OPEN} {
   push(&parenth_stack, '(');
-  printf("PARENTH_OPEN\t%s\tLine %d\n", yytext, current_line);
   return PARENTH_OPEN;
 }
 
 {PARENTH_CLOSE} {
   if (stackIsEmpty(&parenth_stack)) {
-    printf("Error: Unmatched closing parenthesis '%s' at line %d\n", yytext, current_line);
     exit(EXIT_FAILURE);
   }
   pop(&parenth_stack);
-  printf("PARENTH_CLOSE\t%s\tLine %d\n", yytext, current_line);
   return PARENTH_CLOSE;
 }
 
@@ -141,6 +103,16 @@ ELSE               "else"
   return BRACKET_CLOSE;
 }
 
+{ID} {
+  if (yyleng <= 10) {
+    yylval.str = strdup(yytext); // Allocating memory and copying the identifier
+    printf("ID\t%s\tLine %d\n", yylval.str, current_line);
+    return ID;
+  } else {
+    printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
+    exit(EXIT_FAILURE);
+  }
+}
 [ \t]
 \n {
   current_line++;

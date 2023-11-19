@@ -382,11 +382,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[22] =
+static const flex_int16_t yy_accept[23] =
     {   0,
         0,    0,   13,   10,    8,    9,    4,    5,   10,    2,
-       10,    6,    7,    2,    0,    1,    1,    0,   11,    3,
-        0
+        1,    6,    7,    2,    0,    1,    0,    0,   11,    3,
+        1,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -427,34 +427,34 @@ static const YY_CHAR yy_meta[13] =
         1,    1
     } ;
 
-static const flex_int16_t yy_base[23] =
+static const flex_int16_t yy_base[24] =
     {   0,
-        0,    0,   23,   24,   24,   24,   24,   24,   14,    6,
-        7,    9,   24,    0,   12,   24,   24,    7,   24,   24,
-       24,   17
+        0,    0,   25,   26,   26,   26,   26,   26,   16,    6,
+        7,   11,   26,    0,   14,    0,   10,    9,   26,   26,
+        0,   26,   19
     } ;
 
-static const flex_int16_t yy_def[23] =
+static const flex_int16_t yy_def[24] =
     {   0,
-       21,    1,   21,   21,   21,   21,   21,   21,   21,   21,
-       21,   22,   21,   10,   21,   21,   21,   22,   21,   21,
-        0,   21
+       22,    1,   22,   22,   22,   22,   22,   22,   22,   22,
+       22,   23,   22,   10,   22,   11,   22,   23,   22,   22,
+       11,    0,   22
     } ;
 
-static const flex_int16_t yy_nxt[37] =
+static const flex_int16_t yy_nxt[39] =
     {   0,
         4,    5,    6,    7,    8,    9,    4,   10,   11,    4,
-       12,   13,   15,   14,   16,   16,   17,   18,   19,   20,
-       19,   14,   21,    3,   21,   21,   21,   21,   21,   21,
-       21,   21,   21,   21,   21,   21
+       12,   13,   15,   14,   16,   16,   17,   21,   21,   18,
+       19,   20,   19,   14,   22,    3,   22,   22,   22,   22,
+       22,   22,   22,   22,   22,   22,   22,   22
     } ;
 
-static const flex_int16_t yy_chk[37] =
+static const flex_int16_t yy_chk[39] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,   10,   10,   11,   11,   11,   22,   18,   15,
-       12,    9,    3,   21,   21,   21,   21,   21,   21,   21,
-       21,   21,   21,   21,   21,   21
+        1,    1,   10,   10,   11,   11,   11,   17,   17,   23,
+       18,   15,   12,    9,    3,   22,   22,   22,   22,   22,
+       22,   22,   22,   22,   22,   22,   22,   22
     } ;
 
 /* Table of booleans, true if rule could match eol. */
@@ -740,7 +740,7 @@ YY_DECL
 		}
 
 	{
-#line 86 "codel-lex.l"
+#line 88 "codel-lex.l"
 
 
 #line 746 "lex.yy.c"
@@ -770,13 +770,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 22 )
+				if ( yy_current_state >= 23 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 24 );
+		while ( yy_base[yy_current_state] != 26 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -812,7 +812,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 88 "codel-lex.l"
+#line 90 "codel-lex.l"
 {
   if (yyleng <= 10) {
     yylval.str = strdup(yytext); // Allocating memory and copying the identifier
@@ -826,7 +826,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 99 "codel-lex.l"
+#line 101 "codel-lex.l"
 {
   yylval.entier = atoi(yytext);
   printf("INTEGER\t%d\tLine %d\n", yylval.entier, current_line);
@@ -835,7 +835,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 105 "codel-lex.l"
+#line 107 "codel-lex.l"
 {
   // yylval.real is a double 
   yylval.real = atof(yytext);
@@ -845,7 +845,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 112 "codel-lex.l"
+#line 114 "codel-lex.l"
 {
   push(&parenth_stack, '(');
   printf("PARENTH_OPEN\t%s\tLine %d\n", yytext, current_line);
@@ -854,7 +854,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 118 "codel-lex.l"
+#line 120 "codel-lex.l"
 {
   if (stackIsEmpty(&parenth_stack)) {
     printf("Error: Unmatched closing parenthesis '%s' at line %d\n", yytext, current_line);
@@ -867,7 +867,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 128 "codel-lex.l"
+#line 130 "codel-lex.l"
 {
   push(&bracket_stack, '{');
   printf("BRACKET_OPEN\t%s\tLine %d\n", yytext, current_line);
@@ -876,7 +876,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 134 "codel-lex.l"
+#line 136 "codel-lex.l"
 {
   if (stackIsEmpty(&bracket_stack)) {
     printf("Error: Unmatched closing bracket '%s' at line %d\n", yytext, current_line);
@@ -889,20 +889,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 144 "codel-lex.l"
+#line 146 "codel-lex.l"
 
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 145 "codel-lex.l"
+#line 147 "codel-lex.l"
 {
   current_line++;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 149 "codel-lex.l"
+#line 151 "codel-lex.l"
 {
   printf("Error: Invalid character '%s' at line %d\n", yytext, current_line);
   exit(EXIT_FAILURE);
@@ -911,14 +911,14 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 154 "codel-lex.l"
+#line 156 "codel-lex.l"
 {
   printf("COMMENT\t%s\tLine %d\n", yytext, current_line);
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 158 "codel-lex.l"
+#line 160 "codel-lex.l"
 ECHO;
 	YY_BREAK
 #line 924 "lex.yy.c"
@@ -1218,7 +1218,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 22 )
+			if ( yy_current_state >= 23 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1246,11 +1246,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 22 )
+		if ( yy_current_state >= 23 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 21);
+	yy_is_jam = (yy_current_state == 22);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1938,7 +1938,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 158 "codel-lex.l"
+#line 160 "codel-lex.l"
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
