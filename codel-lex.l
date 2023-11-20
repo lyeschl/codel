@@ -63,6 +63,8 @@ ELSE               "else"
 {END} {
   return "END";
 }
+
+
 {INTEGER} {
   yylval.entier = atoi(yytext);
   printf("INTEGER\t%d\tLine %d\n", yylval.entier, current_line);
@@ -109,11 +111,12 @@ ELSE               "else"
     printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
     exit(EXIT_FAILURE);
   }
-  if (searchSymbol(symbolTable, $1) != NULL) {
-    yyerror("ID already declared");
-    exit(EXIT_FAILURE);
-  }
-    insertSymbol(symbolTable,$1)
+    if (searchSymbol(symbolTable, yytext) != NULL) {
+        yyerror("ID already declared");
+        exit(EXIT_FAILURE);
+    }
+
+    insertSymbol(symbolTable, yytext, "UNKNOWN_TYPE", false); // Assuming a default type and not constant
     yylval.str = strdup(yytext); // Allocating memory and copying the identifier
     return ID;
 }

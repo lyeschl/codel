@@ -12,6 +12,14 @@ extern int yyparse();
 extern FILE* yyin;
 extern int yylineno;
 // forloop counter
+// Helper function to get the size of the array
+int arr_size(char** arr) {
+    int size = 0;
+    while (arr[size] != NULL) {
+        size++;
+    }
+    return size;
+}
 void checkCounterID(char* id) {
     if (strcmp(id, storedID) != 0) {
         fprintf(stderr, "Semantic error: Counter ID '%s' does not match loop head ID '%s'\n", id, storedID);
@@ -26,14 +34,16 @@ void yyerror(const char* msg) {
 
 %union {
 int     entier;
-char*   str;
+// char*   str;
 double  real;
 bool    boolean;
 }
 
 %token BEGIN END CONST
 %token TRUE FALSE
-%token BOOL INT FLOAT  
+%token BOOL 
+%token <str> INT
+%token <str> FLOAT  
 %token PLUS MINUS MULT DIV  
 %token LESS GREATER NOTEQUAL LESSEQ GREATEQ EQUAL   
 %token NOT     
@@ -48,13 +58,16 @@ bool    boolean;
 %token IF
 %token ELSE
 
-%type <real> arithmetic_expression
+%type <entier> int_arithmetic_expression
+%type <real> float_arithmetic_expression
 %type <real> assign_ins
 %type <boolean> condition expression_condition
+%type <str> identifier_list 
+%type <str> type_specifier
 
 %left PLUS MINUS
 %left MULT DIV
-%left UMINUS  // Unary minus
+%right UMINUS  // Unary minus
 
 %start start
 %%
@@ -64,34 +77,80 @@ start:                  declaration_list BEGIN instruction_list END
 ;
 declaration_list:       declaration_list declaration | ;
 declaration:            variable_declaration SEMICOLON 
-                        | constant_declaration SEMICOLON 
+                        | int_constant_declaration SEMICOLON 
+                        | float_constant_declaration SEMICOLON 
                         | variable_declaration error { yyerror("Missing SEMICOLON after variable declaration");}
-                        | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
+                        | int_constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
+                        | float_constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
 ;
 
-variable_declaration: type_specifier identifier_list COLON ;
-constant_declaration:   CONST type_specifier assign_ins;
+variable_declaration: type_specifier identifier_list COLON {
+    // Add each ID to the symbol table with type and isConstant set to False
+    int size = arr_size($2);
+    for (int i = 0; i < size; i++) {
+        modifyEntry(symbolTable, $2[i], $1, false);
+        free($2[i]);
+    }
+    free($2);
+};
 
-type_specifier:         INT | FLOAT | BOOL;
-identifier_list:        ID | identifier_list COLON ID;
+int_constant_declaration: CONST INT ID ASSIGN_OP int_arithmetic_expression {
+    // Add the ID to the symbol table with type and isConstant set to True
+   modifyEntry(symbolTable, $3, $2, true);
+};
+
+float_constant_declaration: CONST FLOAT ID ASSIGN_OP float_arithmetic_expression {
+    // Add the ID to the symbol table with type and isConstant set to True
+   modifyEntry(symbolTable, $3, $2, true);
+};
+
+type_specifier: INT    { $$ = strdup("INT"); }
+              | FLOAT  { $$ = strdup("FLOAT"); }
+              | BOOL   { $$ = strdup("BOOL"); };
+
+identifier_list: ID { $$ = malloc(sizeof(char*)); $$[0] = strdup($1); }
+               | identifier_list COLON ID {
+                   int size = arr_size($1);
+                   $$ = realloc($1, (size + 1) * sizeof(char*));
+                   $$[size] = strdup($3);
+               }
+               ;
 
 
-arithmetic_expression: arithmetic_expression PLUS arithmetic_expression { $$ = $1 + $3; }
-                    | arithmetic_expression MINUS arithmetic_expression { $$ = $1 - $3; }
-                    | arithmetic_expression MULT arithmetic_expression { $$ = $1 * $3; }
-                    | arithmetic_expression DIV arithmetic_expression {
+int_arithmetic_expression: int_arithmetic_expression PLUS int_arithmetic_expression { $$ = $1 + $3; }
+                    | int_arithmetic_expression MINUS int_arithmetic_expression { $$ = $1 - $3; }
+                    | int_arithmetic_expression MULT int_arithmetic_expression { $$ = $1 * $3; }
+                    | int_arithmetic_expression DIV int_arithmetic_expression {
                         if ($3 == 0)
                             printf("Semantic error: Division by zero at line %d\n", yylineno);
                         else
                             $$ = $1 / $3;
                          }
-                    | MINUS arithmetic_expression %prec UMINUS { $$ = -($2); }  
+                    | MINUS int_arithmetic_expression %prec UMINUS { $$ = -($2); }  
                     | ID { 
                         if (searchSymbol(symbolTable, $1) == NULL) {
                             yyerror("Undeclared variable used in assignment");
                         }
                         $$ = strdup($1); free($1);}
                     | INTEGER { $$ = atoi($1); }
+                    ;
+
+
+float_arithmetic_expression: float_arithmetic_expression PLUS float_arithmetic_expression { $$ = float($1) + float($3); }
+                    | float_arithmetic_expression MINUS float_arithmetic_expression { $$ = float($1) - float($3); }
+                    | float_arithmetic_expression MULT float_arithmetic_expression { $$ = float($1) * float($3); }
+                    | float_arithmetic_expression DIV float_arithmetic_expression {
+                        if ($3 == 0)
+                            printf("Semantic error: Division by zero at line %d\n", yylineno);
+                        else
+                            $$ = $1 / $3;
+                         }
+                    | MINUS float_arithmetic_expression %prec UMINUS { $$ = -($2); }  
+                    | ID { 
+                        if (searchSymbol(symbolTable, $1) == NULL) {
+                            yyerror("Undeclared variable used in assignment");
+                        }
+                        $$ = strdup($1); free($1);}
                     | REAL { $$ = atof($1); }
                     ;
 
@@ -121,7 +180,7 @@ for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition COMMA coun
                         BRACKET_CLOSE { yyerror("Missing COMMAS in forloop head"); }
 ;
 condition:             PARENTH_OPEN expression_condition PARENTH_CLOSE { $$ = $2 }
-                    |   NOT condition %prec UMINUS
+                    |   NOT condition { $$ = !$2; }
                     ;
 
 expression_condition:    expression_condition LESS expression_condition
@@ -140,13 +199,18 @@ expression_condition:    expression_condition LESS expression_condition
                     |   REAL {$$ = $1}
 
                     ;
-assign_ins:             ID ASSIGN_OP arithmetic_expression {
+assign_ins:             ID ASSIGN_OP int_arithmetic_expression {
                     if (searchSymbol(symbolTable, $1) == NULL) {
                     yyerror("Undeclared variable used in assignment");
                     }
                     $$ = $3;
                     }
-
+                    |    ID ASSIGN_OP float_arithmetic_expression {
+                    if (searchSymbol(symbolTable, $1) == NULL) {
+                    yyerror("Undeclared variable used in assignment");
+                    }
+                    $$ = $3;
+                    }
                     | ID ASSIGN_OP TRUE {
                     if (searchSymbol(symbolTable, $1) == NULL) {
                     yyerror("Undeclared variable used in assignment");
