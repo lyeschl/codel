@@ -39,7 +39,7 @@ void yyerror(const char* msg) {
 int     entier;
 char*   str;
 double  real;
-bool    boolean;
+int    boolean;
 }
 
 %token BEGIN END CONST

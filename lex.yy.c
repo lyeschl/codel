@@ -478,10 +478,19 @@ char *yytext;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 
-symbolTable = createSymbolTable();
+typedef enum {
+    PARENTH_OPEN,
+    PARENTH_CLOSE,
+    BRACKET_OPEN,
+    BRACKET_CLOSE,
+    INTEGER,
+    ID,
+    UNKNOWN,
+} TokenType;
+
+SymbolTable symbolTable = createSymbolTable();
 extern YYSTYPE yylval;
 int current_line = 1;
 
@@ -492,8 +501,8 @@ void yyerror(const char* msg) {
     fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
     exit(EXIT_FAILURE);
 }
-#line 495 "lex.yy.c"
-#line 496 "lex.yy.c"
+#line 504 "lex.yy.c"
+#line 505 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -710,10 +719,10 @@ YY_DECL
 		}
 
 	{
-#line 59 "codel-lex.l"
+#line 68 "codel-lex.l"
 
 
-#line 716 "lex.yy.c"
+#line 725 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -782,7 +791,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 61 "codel-lex.l"
+#line 70 "codel-lex.l"
 {
   push(&parenth_stack, '(');
   return PARENTH_OPEN;
@@ -790,7 +799,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 66 "codel-lex.l"
+#line 75 "codel-lex.l"
 {
   if (stackIsEmpty(&parenth_stack)) {
     exit(EXIT_FAILURE);
@@ -801,7 +810,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 74 "codel-lex.l"
+#line 83 "codel-lex.l"
 {
   push(&bracket_stack, '{');
   return BRACKET_OPEN;
@@ -809,7 +818,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 79 "codel-lex.l"
+#line 88 "codel-lex.l"
 {
   if (stackIsEmpty(&bracket_stack)) {
     printf("Error: Unmatched closing bracket '%s' at line %d\n", yytext, current_line);
@@ -822,7 +831,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 89 "codel-lex.l"
+#line 98 "codel-lex.l"
 {
   yylval.entier = atoi(yytext);
   return INTEGER;
@@ -830,37 +839,37 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 94 "codel-lex.l"
+#line 103 "codel-lex.l"
 {
   if (yyleng > 10){
     printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
     exit(EXIT_FAILURE);
   }
-    if (searchSymbol(symbolTable, yytext) != NULL) {
+    if (searchSymbol(&symbolTable, yytext) != NULL) {
         yyerror("ID already declared");
         exit(EXIT_FAILURE);
     }
 
-    insertSymbol(symbolTable, yytext, "UNKNOWN_TYPE", false); // Assuming a default type and not constant
+    insertSymbol(&symbolTable, yytext, "UNKNOWN_TYPE", false); // Assuming a default type and not constant
     yylval.str = strdup(yytext); // Allocating memory and copying the identifier
-    return yytext;
+    return ID;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 108 "codel-lex.l"
+#line 117 "codel-lex.l"
 
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 109 "codel-lex.l"
+#line 118 "codel-lex.l"
 {
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 112 "codel-lex.l"
+#line 121 "codel-lex.l"
 {
   printf("Error: Invalid character '%s' at line %d\n", yytext, yylineno);
   exit(EXIT_FAILURE);
@@ -868,10 +877,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 116 "codel-lex.l"
+#line 125 "codel-lex.l"
 ECHO;
 	YY_BREAK
-#line 874 "lex.yy.c"
+#line 883 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1888,7 +1897,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 116 "codel-lex.l"
+#line 125 "codel-lex.l"
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {

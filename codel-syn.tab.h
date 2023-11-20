@@ -101,7 +101,7 @@ union YYSTYPE
 int     entier;
 char*   str;
 double  real;
-bool    boolean;
+int    boolean;
 
 #line 107 "codel-syn.tab.h"
 
