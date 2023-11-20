@@ -71,10 +71,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include "codel-syn.tab.h"
 #include "symbol_table.h"
 #include "stack.h"
+#include <stdbool.h>
 // extern NODE *yyroot;
 SymbolTable* symbolTable;
 #define EXIT_FAILURE 1
@@ -1893,7 +1893,7 @@ yyreturnlab:
 
 
 int main() {
-    symbolTable = createSymbolTable();
+    // symbolTable = createSymbolTable();
     yyparse();
     // print_tree(yyroot);
     printSymbolTable(symbolTable);  // Print the symbol table at the end

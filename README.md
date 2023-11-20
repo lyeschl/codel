@@ -16,30 +16,33 @@
   return REAL;
 }
 
-BEGIN              "BEGIN"
-END                "END"
-INT                "INT"
-FLOAT              "FLOAT"
-BOOL               "BOOL"
-CONST              "CONST"
-COLON              ":"
-SEMICOLON          ";"
-COMMA              ","
-PLUS               "+"
-MINUS              "-"
-MULT               "*"
-DIV                "/"
-LESS               "<"
-GREATER            ">"
-NOTEQUAL           "<>"
-LESSEQ             "<="
-GREATEQ            ">="
-EQUAL              "=="
-NOT                "!"
-ASSIGN_OP          ":="
-FOR                "for"
-IF                 "if"
-ELSE               "else"
+"{"[^}]*"}"      /* Ignore comments enclosed in curly braces */
+"BEGIN"  return BEGIN    ;
+"END"    return END      ;
+"INT"    return INT      ;
+"FLOAT"  return FLOAT    ;
+"BOOL"   return BOOL     ;
+"CONST"  return CONST    ;
+":"      return COLON    ;
+";"      return SEMICOLON;
+","      return COMMA    ;
+"+"      return PLUS     ;
+"-"      return MINUS    ;
+"*"      return MULT     ;
+"/"      return DIV      ;
+"<"      return LESS     ;
+">"      return GREATER  ;
+"<>"     return NOTEQUAL ;
+"<="     return LESSEQ   ;
+">="     return GREATEQ  ;
+"=="     return EQUAL    ;
+"!"      return NOT      ;
+":="     return ASSIGN_OP;
+"for"    return FOR      ;
+"if"     return IF       ;
+"else"   return ELSE     ;
+
+
 # Notes
 - Q:does my grammar has to be LL(1) , so that it doesnt , recursive gauche  
 - A: no it doesn't have to be LL or LR but it must be written in a way to resolve the shift/reduce conflicts

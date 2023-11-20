@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+
+symbolTable = createSymbolTable();
 extern YYSTYPE yylval;
 int current_line = 1;
 
@@ -20,53 +22,41 @@ void yyerror(const char* msg) {
 %}
 
 %option yylineno
-%option noyywrap
 
-LETTER             [a-zA-Z]
+BEGIN              "BEGIN"
+END                "END"
+INT                "INT"
+FLOAT              "FLOAT"
+BOOL               "BOOL"
+CONST              "CONST"
+COLON              ":"
+SEMICOLON          ";"
+COMMA              ","
+PLUS               "+"
+MINUS              "-"
+MULT               "*"
+DIV                "/"
+LESS               "<"
+GREATER            ">"
+NOTEQUAL           "<>"
+LESSEQ             "<="
+GREATEQ            ">="
+EQUAL              "=="
+NOT                "!"
+ASSIGN_OP          ":="
+FOR                "for"
+IF                 "if"
+ELSE               "else"
 TRUE               "True"
 FALSE              "False"
-ID                 [a-zA-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
-INTEGER            [-+]?([0-9])+
-REAL               [-+]?{[0-9]}+"."{[0-9]}
 PARENTH_OPEN       "("     
 PARENTH_CLOSE      ")"
 BRACKET_OPEN       "{"
 BRACKET_CLOSE      "}"
+INTEGER            [-+]?([0-9])+
+REAL               [-+]?[0-9]+"."[0-9]
+ID                 [a-zA-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
 %%
-"BEGIN"  return BEGIN    ;
-"END"    return END      ;
-"INT"    return INT      ;
-"FLOAT"  return FLOAT    ;
-"BOOL"   return BOOL     ;
-"CONST"  return CONST    ;
-":"      return COLON    ;
-";"      return SEMICOLON;
-","      return COMMA    ;
-"+"      return PLUS     ;
-"-"      return MINUS    ;
-"*"      return MULT     ;
-"/"      return DIV      ;
-"<"      return LESS     ;
-">"      return GREATER  ;
-"<>"     return NOTEQUAL ;
-"<="     return LESSEQ   ;
-">="     return GREATEQ  ;
-"=="     return EQUAL    ;
-"!"      return NOT      ;
-":="     return ASSIGN_OP;
-"for"    return FOR      ;
-"if"     return IF       ;
-"else"   return ELSE     ;
-
-
-"{"[^}]*"}"      /* Ignore comments enclosed in curly braces */
-
-{INTEGER} {
-  yylval.entier = atoi(yytext);
-  printf("INTEGER\t%d\tLine %d\n", yylval.entier, current_line);
-  return INTEGER;
-}
-
 
 {PARENTH_OPEN} {
   push(&parenth_stack, '(');
@@ -83,7 +73,6 @@ BRACKET_CLOSE      "}"
 
 {BRACKET_OPEN} {
   push(&bracket_stack, '{');
-  printf("BRACKET_OPEN\t%s\tLine %d\n", yytext, current_line);
   return BRACKET_OPEN;
 }
 
@@ -95,6 +84,11 @@ BRACKET_CLOSE      "}"
   pop(&bracket_stack);
   printf("BRACKET_CLOSE\t%s\tLine %d\n", yytext, current_line);
   return BRACKET_CLOSE;
+}
+
+{INTEGER} {
+  yylval.entier = atoi(yytext);
+  return INTEGER;
 }
 
 {ID} {
@@ -109,15 +103,14 @@ BRACKET_CLOSE      "}"
 
     insertSymbol(symbolTable, yytext, "UNKNOWN_TYPE", false); // Assuming a default type and not constant
     yylval.str = strdup(yytext); // Allocating memory and copying the identifier
-    return ID;
+    return yytext;
 }
 [ \t]
 \n {
-  current_line++;
 }
 
 . {
-  printf("Error: Invalid character '%s' at line %d\n", yytext, current_line);
+  printf("Error: Invalid character '%s' at line %d\n", yytext, yylineno);
   exit(EXIT_FAILURE);
 }
 %%
@@ -154,4 +147,7 @@ int main(int argc, char *argv[]) {
   fclose(inputFile);
 
   return 0;
+}
+int yywrap() {
+    return 1;  // indicate end of input
 }
