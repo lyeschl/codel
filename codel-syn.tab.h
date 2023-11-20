@@ -57,35 +57,37 @@ extern int yydebug;
     BEGIN = 258,                   /* BEGIN  */
     END = 259,                     /* END  */
     CONST = 260,                   /* CONST  */
-    BOOL = 261,                    /* BOOL  */
-    INT = 262,                     /* INT  */
-    FLOAT = 263,                   /* FLOAT  */
-    PLUS = 264,                    /* PLUS  */
-    MINUS = 265,                   /* MINUS  */
-    MULT = 266,                    /* MULT  */
-    DIV = 267,                     /* DIV  */
-    LESS = 268,                    /* LESS  */
-    GREATER = 269,                 /* GREATER  */
-    NOTEQUAL = 270,                /* NOTEQUAL  */
-    LESSEQ = 271,                  /* LESSEQ  */
-    GREATEQ = 272,                 /* GREATEQ  */
-    EQUAL = 273,                   /* EQUAL  */
-    NOT = 274,                     /* NOT  */
-    PARENTH_OPEN = 275,            /* PARENTH_OPEN  */
-    PARENTH_CLOSE = 276,           /* PARENTH_CLOSE  */
-    BRACKET_OPEN = 277,            /* BRACKET_OPEN  */
-    BRACKET_CLOSE = 278,           /* BRACKET_CLOSE  */
-    ASSIGN_OP = 279,               /* ASSIGN_OP  */
-    INTEGER = 280,                 /* INTEGER  */
-    REAL = 281,                    /* REAL  */
-    ID = 282,                      /* ID  */
-    COMMA = 283,                   /* COMMA  */
-    COLON = 284,                   /* COLON  */
-    SEMICOLON = 285,               /* SEMICOLON  */
-    FOR = 286,                     /* FOR  */
-    IF = 287,                      /* IF  */
-    ELSE = 288,                    /* ELSE  */
-    UMINUS = 289                   /* UMINUS  */
+    TRUE = 261,                    /* TRUE  */
+    FALSE = 262,                   /* FALSE  */
+    BOOL = 263,                    /* BOOL  */
+    INT = 264,                     /* INT  */
+    FLOAT = 265,                   /* FLOAT  */
+    PLUS = 266,                    /* PLUS  */
+    MINUS = 267,                   /* MINUS  */
+    MULT = 268,                    /* MULT  */
+    DIV = 269,                     /* DIV  */
+    LESS = 270,                    /* LESS  */
+    GREATER = 271,                 /* GREATER  */
+    NOTEQUAL = 272,                /* NOTEQUAL  */
+    LESSEQ = 273,                  /* LESSEQ  */
+    GREATEQ = 274,                 /* GREATEQ  */
+    EQUAL = 275,                   /* EQUAL  */
+    NOT = 276,                     /* NOT  */
+    PARENTH_OPEN = 277,            /* PARENTH_OPEN  */
+    PARENTH_CLOSE = 278,           /* PARENTH_CLOSE  */
+    BRACKET_OPEN = 279,            /* BRACKET_OPEN  */
+    BRACKET_CLOSE = 280,           /* BRACKET_CLOSE  */
+    ASSIGN_OP = 281,               /* ASSIGN_OP  */
+    INTEGER = 282,                 /* INTEGER  */
+    REAL = 283,                    /* REAL  */
+    ID = 284,                      /* ID  */
+    COMMA = 285,                   /* COMMA  */
+    COLON = 286,                   /* COLON  */
+    SEMICOLON = 287,               /* SEMICOLON  */
+    FOR = 288,                     /* FOR  */
+    IF = 289,                      /* IF  */
+    ELSE = 290,                    /* ELSE  */
+    UMINUS = 291                   /* UMINUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -99,8 +101,9 @@ union YYSTYPE
 int     entier;
 char*   str;
 double  real;
+bool    boolean;
 
-#line 104 "codel-syn.tab.h"
+#line 107 "codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

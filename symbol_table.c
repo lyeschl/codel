@@ -21,7 +21,7 @@ SymbolEntry* searchSymbol(SymbolTable* table, const char* identifier) {
     return NULL;
 }
 
-void insertSymbol(SymbolTable* table, const char* identifier, const char* type) {
+void insertSymbol(SymbolTable* table, const char* identifier, const char* type,bool isConstant) {
     SymbolEntry* newEntry = (SymbolEntry*)malloc(sizeof(SymbolEntry));
     newEntry->identifier = strdup(identifier);
     newEntry->type = strdup(type);

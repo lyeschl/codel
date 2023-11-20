@@ -1,5 +1,6 @@
 %{
 #include "codel-syn.tab.h"
+#include "symbole_table.h"
 #include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +25,6 @@ FALSE              "False"
 ID                 [a-zA-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
 INTEGER            [-+]?({DIGIT})+
 REAL               [-+]?{DIGIT}+"."{DIGIT}
-COMMENT            \{[^}]*\}
 PARENTH_OPEN       "("
 PARENTH_CLOSE      ")"
 BRACKET_OPEN       "{"
@@ -56,6 +56,7 @@ ELSE               "else"
 
 %%
 
+"{"[^}]*"}"      /* Ignore comments enclosed in curly braces */
 {BEGIN} {
   return "BEGIN";
 }
@@ -104,14 +105,17 @@ ELSE               "else"
 }
 
 {ID} {
-  if (yyleng <= 10) {
-    yylval.str = strdup(yytext); // Allocating memory and copying the identifier
-    printf("ID\t%s\tLine %d\n", yylval.str, current_line);
-    return ID;
-  } else {
+  if (yyleng > 10){
     printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
     exit(EXIT_FAILURE);
   }
+  if (searchSymbol(symbolTable, $1) != NULL) {
+    yyerror("ID already declared");
+    exit(EXIT_FAILURE);
+  }
+    insertSymbol(symbolTable,$1)
+    yylval.str = strdup(yytext); // Allocating memory and copying the identifier
+    return ID;
 }
 [ \t]
 \n {
@@ -122,11 +126,6 @@ ELSE               "else"
   printf("Error: Invalid character '%s' at line %d\n", yytext, current_line);
   exit(EXIT_FAILURE);
 }
-
-{COMMENT} {
-  printf("COMMENT\t%s\tLine %d\n", yytext, current_line);
-}
-
 %%
 int main(int argc, char *argv[]) {
     if (argc != 2) {

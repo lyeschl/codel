@@ -49,8 +49,8 @@ bool    boolean;
 %token ELSE
 
 %type <real> arithmetic_expression
-%type <real> expression
-
+%type <real> assign_ins
+%type <boolean> condition expression_condition
 
 %left PLUS MINUS
 %left MULT DIV
@@ -73,42 +73,24 @@ variable_declaration: type_specifier identifier_list COLON ;
 constant_declaration:   CONST type_specifier assign_ins;
 
 type_specifier:         INT | FLOAT | BOOL;
-identifier_list:        ID 
-                            {
-                                if (searchSymbol(symbolTable, $1) == NULL) {
-            yyerror("Undeclared variable used in assignment");
-        }
-                            insertSymbol(symbolTable,$1)
-                            }
-| identifier_list COLON ID
-        {
-            if (searchSymbol(symbolTable, $1) == NULL) {
-            yyerror("Undeclared variable used in assignment");
-        } ;    
+identifier_list:        ID | identifier_list COLON ID;
 
 
-        }
-            expression: arithmetic_expression
-    | ID
-    {
-        if (searchSymbol(symbolTable, $1) == NULL) {
-            yyerror("Undeclared variable used in assignment");
-        }
-    }
-    | INTEGER
-    | REAL;
-
-arithmetic_expression: expression PLUS expression { $$ = $1 + $3; }
-                    | expression MINUS expression { $$ = $1 - $3; }
-                    | expression MULT expression { $$ = $1 * $3; }
-                    | expression DIV expression {
+arithmetic_expression: arithmetic_expression PLUS arithmetic_expression { $$ = $1 + $3; }
+                    | arithmetic_expression MINUS arithmetic_expression { $$ = $1 - $3; }
+                    | arithmetic_expression MULT arithmetic_expression { $$ = $1 * $3; }
+                    | arithmetic_expression DIV arithmetic_expression {
                         if ($3 == 0)
                             printf("Semantic error: Division by zero at line %d\n", yylineno);
                         else
                             $$ = $1 / $3;
                          }
                     | MINUS arithmetic_expression %prec UMINUS { $$ = -($2); }  
-                    | ID { $$ = strdup($1); free($1);}
+                    | ID { 
+                        if (searchSymbol(symbolTable, $1) == NULL) {
+                            yyerror("Undeclared variable used in assignment");
+                        }
+                        $$ = strdup($1); free($1);}
                     | INTEGER { $$ = atoi($1); }
                     | REAL { $$ = atof($1); }
                     ;
@@ -127,28 +109,49 @@ for_loop_ins:           FOR PARENTH_OPEN ID ASSIGN_OP COMMA condition COMMA coun
                         BRACKET_OPEN
                             instruction
                         BRACKET_CLOSE
+{ 
+                        if (searchSymbol(symbolTable, $3) == NULL) {
+                            yyerror("Undeclared variable used in assignment");
+                        }
+                        }
+
                         | FOR PARENTH_OPEN ID ASSIGN_OP error condition error counter PARENTH_CLOSE 
                         BRACKET_OPEN
                             instruction
                         BRACKET_CLOSE { yyerror("Missing COMMAS in forloop head"); }
 ;
-condition:             expression_condition
+condition:             PARENTH_OPEN expression_condition PARENTH_CLOSE { $$ = $2 }
                     |   NOT condition %prec UMINUS
-                    |   PARENTH_OPEN condition PARENTH_CLOSE
                     ;
-s=
-expression_condition:    expression LESS expression
-                    |   expression GREATER expression
-                    |   expression NOTEQUAL expression
-                    |   expression LESSEQ expression
-                    |   expression GREATEQ expression
-                    |   expression EQUAL expression
-                    |   ID
-                    |   INTEGER
-                    |   REAL
+
+expression_condition:    expression_condition LESS expression_condition
+                    |   expression_condition GREATER expression_condition
+                    |   expression_condition NOTEQUAL expression_condition
+                    |   expression_condition LESSEQ expression_condition
+                    |   expression_condition GREATEQ expression_condition
+                    |   expression_condition EQUAL expression_condition
+                    |   ID {
+                    if (searchSymbol(symbolTable, $1) == NULL) {
+                    yyerror("Undeclared variable used in assignment");
+                    }
+                    }
+
+                    |   INTEGER {$$ = $1}
+                    |   REAL {$$ = $1}
+
                     ;
-assign_ins:             ID ASSIGN_OP arithmetic_expression 
-                    | ID ASSIGN_OP TRUE
+assign_ins:             ID ASSIGN_OP arithmetic_expression {
+                    if (searchSymbol(symbolTable, $1) == NULL) {
+                    yyerror("Undeclared variable used in assignment");
+                    }
+                    $$ = $3;
+                    }
+
+                    | ID ASSIGN_OP TRUE {
+                    if (searchSymbol(symbolTable, $1) == NULL) {
+                    yyerror("Undeclared variable used in assignment");
+                    }
+                    }
                     | ID ASSIGN_OP FALSE {
                     if (searchSymbol(symbolTable, $1) == NULL) {
                     yyerror("Undeclared variable used in assignment");
