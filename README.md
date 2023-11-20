@@ -1,4 +1,45 @@
 
+                    |   ID {
+                    // if (searchSymbol(symbolTable, $1) == NULL) {
+                    // yyerror("Undeclared variable used in assignment");
+                    // }
+                    }
+{BEGIN} {
+  return "BEGIN";
+}
+{END} {
+  return "END";
+}
+
+{REAL} {
+  (yylval.real = atof(yytext));
+  return REAL;
+}
+
+BEGIN              "BEGIN"
+END                "END"
+INT                "INT"
+FLOAT              "FLOAT"
+BOOL               "BOOL"
+CONST              "CONST"
+COLON              ":"
+SEMICOLON          ";"
+COMMA              ","
+PLUS               "+"
+MINUS              "-"
+MULT               "*"
+DIV                "/"
+LESS               "<"
+GREATER            ">"
+NOTEQUAL           "<>"
+LESSEQ             "<="
+GREATEQ            ">="
+EQUAL              "=="
+NOT                "!"
+ASSIGN_OP          ":="
+FOR                "for"
+IF                 "if"
+ELSE               "else"
 # Notes
 - Q:does my grammar has to be LL(1) , so that it doesnt , recursive gauche  
 - A: no it doesn't have to be LL or LR but it must be written in a way to resolve the shift/reduce conflicts
