@@ -5,6 +5,7 @@
 #include "symbol_table.h"
 #include "stack.h"
 #include <stdbool.h>
+#include <string.h>
 // extern NODE *yyroot;
 SymbolTable* symbolTable;
 #define EXIT_FAILURE 1
@@ -158,10 +159,10 @@ float_arithmetic_expression: float_arithmetic_expression arithmetic_operator flo
                         if (searchSymbol(symbolTable, $1) == NULL) {
                             yyerror("Undeclared variable used in assignment");
                         }
-                        $$ = strdup($1); free($1);
+                        $$ = atof($1); free($1);
                         }
                     | REAL { 
-                        $$ = atof($1);
+                        $$ = $1;
                          }
                     ;
 
@@ -174,15 +175,12 @@ instruction:             assign_ins SEMICOLON
 ;
 
 arithmetic_expression: int_arithmetic_expression | float_arithmetic_expression;
+
 id_assign_op: ID ASSIGN_OP;
+bool_value:         TRUE | FALSE;
+assign_ins_bool:    id_assign_op bool_value ;
 assign_ins:         id_assign_op arithmetic_expression | assign_ins_bool;
 
-
-bool_value:         TRUE | FALSE;
-assign_ins_bool:    id_assign_op bool_value 
-     
-
-                    ;
 for_loop_ins:   for_loop_head for_loop_body;
 for_loop_head: FOR PARENTH_OPEN assign_ins COMMA condition COMMA assign_ins PARENTH_CLOSE
                 | FOR PARENTH_OPEN assign_ins error condition error assign_ins PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
