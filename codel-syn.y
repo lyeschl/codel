@@ -7,7 +7,6 @@
 #include <stdbool.h>
 #include <string.h>
 // extern NODE *yyroot;
-SymbolTable* symbolTable;
 #define EXIT_FAILURE 1
 char* storedID;
 
@@ -224,6 +223,7 @@ int main() {
     yyparse();
     // print_tree(yyroot);
     printSymbolTable(symbolTable);  // Print the symbol table at the end
+    freeSymbolTable(symbolTable);
     return 0;
 }
 

@@ -18,6 +18,10 @@ typedef struct SymbolTable {
 SymbolTable* createSymbolTable();
 SymbolEntry* searchSymbol(SymbolTable* table, const char* identifier);
 void insertSymbol(SymbolTable* table, const char* identifier, const char* type,bool isConstant);
+void modifyEntry(SymbolTable* table, const char* identifier, const char* type, bool isConstant);
 void printSymbolTable(SymbolTable* table);
+void freeSymbolEntry(SymbolEntry* entry);
+void freeSymbolTable(SymbolTable* table);
 
+extern SymbolTable *symbolTable;
 #endif  // SYMBOL_TABLE_H

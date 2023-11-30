@@ -77,7 +77,6 @@
 #include <stdbool.h>
 #include <string.h>
 // extern NODE *yyroot;
-SymbolTable* symbolTable;
 #define EXIT_FAILURE 1
 char* storedID;
 
@@ -99,7 +98,7 @@ void yyerror(const char* msg) {
     exit(EXIT_FAILURE);
 }
 
-#line 103 "codel-syn.tab.c"
+#line 102 "codel-syn.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -589,14 +588,14 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    84,    84,    85,    86,    88,    88,    89,    90,    91,
-      92,    93,    96,    96,    96,    97,   110,   110,   111,   115,
-     115,   118,   121,   129,   129,   129,   129,   130,   137,   138,
-     144,   149,   157,   158,   164,   170,   170,   171,   172,   173,
-     174,   177,   177,   179,   180,   180,   181,   182,   182,   184,
-     185,   186,   188,   189,   191,   194,   195,   198,   198,   198,
-     198,   198,   198,   199,   200,   205,   208,   214,   215,   216,
-     216,   217
+       0,    83,    83,    84,    85,    87,    87,    88,    89,    90,
+      91,    92,    95,    95,    95,    96,   109,   109,   110,   114,
+     114,   117,   120,   128,   128,   128,   128,   129,   136,   137,
+     143,   148,   156,   157,   163,   169,   169,   170,   171,   172,
+     173,   176,   176,   178,   179,   179,   180,   181,   181,   183,
+     184,   185,   187,   188,   190,   193,   194,   197,   197,   197,
+     197,   197,   197,   198,   199,   204,   207,   213,   214,   215,
+     215,   216
 };
 #endif
 
@@ -1358,31 +1357,31 @@ yyreduce:
   switch (yyn)
     {
   case 3: /* start: declaration_list error instruction_list END  */
-#line 85 "codel-syn.y"
+#line 84 "codel-syn.y"
                                                                       {yyerror("Missing BEGIN");}
-#line 1364 "codel-syn.tab.c"
+#line 1363 "codel-syn.tab.c"
     break;
 
   case 4: /* start: declaration_list BEGIN instruction_list error  */
-#line 86 "codel-syn.y"
+#line 85 "codel-syn.y"
                                                                         {yyerror("Missing END");}
-#line 1370 "codel-syn.tab.c"
+#line 1369 "codel-syn.tab.c"
     break;
 
   case 10: /* declaration: variable_declaration error  */
-#line 92 "codel-syn.y"
+#line 91 "codel-syn.y"
                                                      { yyerror("Missing SEMICOLON after variable declaration");}
-#line 1376 "codel-syn.tab.c"
+#line 1375 "codel-syn.tab.c"
     break;
 
   case 11: /* declaration: constant_declaration error  */
-#line 93 "codel-syn.y"
+#line 92 "codel-syn.y"
                                                      { yyerror("Missing SEMICOLON after constant declaration");}
-#line 1382 "codel-syn.tab.c"
+#line 1381 "codel-syn.tab.c"
     break;
 
   case 15: /* variable_declaration: type_specifier identifier_list  */
-#line 97 "codel-syn.y"
+#line 96 "codel-syn.y"
                                                       {
                         // Add each ID to the symbol table with type and isConstant set to False
                         int size = arr_size((yyvsp[0].str));
@@ -1392,38 +1391,38 @@ yyreduce:
                         }
                         free((yyvsp[0].str));
                     }
-#line 1396 "codel-syn.tab.c"
+#line 1395 "codel-syn.tab.c"
     break;
 
   case 18: /* constant_declaration: CONST const_type ID ASSIGN_OP const_arithmetic_expression  */
-#line 111 "codel-syn.y"
+#line 110 "codel-syn.y"
                                                                                 {
     // Add the ID to the symbol table with type and isConstant set to True
    modifyEntry(symbolTable, (yyvsp[-2].str), (yyvsp[-3].str), true);
 }
-#line 1405 "codel-syn.tab.c"
+#line 1404 "codel-syn.tab.c"
     break;
 
   case 21: /* identifier_list: ID  */
-#line 118 "codel-syn.y"
+#line 117 "codel-syn.y"
                     {
      (yyval.str) = malloc(sizeof(char*)); (yyval.str)[0] = strdup((yyvsp[0].str));
       }
-#line 1413 "codel-syn.tab.c"
+#line 1412 "codel-syn.tab.c"
     break;
 
   case 22: /* identifier_list: identifier_list COLON ID  */
-#line 121 "codel-syn.y"
+#line 120 "codel-syn.y"
                                           {
                    int size = arr_size((yyvsp[-2].str));
                    (yyval.str) = realloc((yyvsp[-2].str), (size + 1) * sizeof(char*));
                    (yyval.str)[size] = strdup((yyvsp[0].str));
                }
-#line 1423 "codel-syn.tab.c"
+#line 1422 "codel-syn.tab.c"
     break;
 
   case 27: /* int_arithmetic_expression: int_arithmetic_expression arithmetic_operator int_arithmetic_expression  */
-#line 130 "codel-syn.y"
+#line 129 "codel-syn.y"
                                                                                                    { 
     (yyval.entier) = (yyvsp[-2].entier) + (yyvsp[0].entier); 
                         if ((yyvsp[0].entier) == 0)
@@ -1431,36 +1430,36 @@ yyreduce:
                         else
                             (yyval.entier) = (yyvsp[-2].entier) / (yyvsp[0].entier);
                          }
-#line 1435 "codel-syn.tab.c"
+#line 1434 "codel-syn.tab.c"
     break;
 
   case 28: /* int_arithmetic_expression: MINUS int_arithmetic_expression  */
-#line 137 "codel-syn.y"
+#line 136 "codel-syn.y"
                                                                    { (yyval.entier) = -((yyvsp[0].entier)); }
-#line 1441 "codel-syn.tab.c"
+#line 1440 "codel-syn.tab.c"
     break;
 
   case 29: /* int_arithmetic_expression: ID  */
-#line 138 "codel-syn.y"
+#line 137 "codel-syn.y"
                          { 
                         if (searchSymbol(symbolTable, (yyvsp[0].str)) == NULL) {
                             yyerror("Undeclared variable used in assignment");
                         }
                         (yyval.entier) = strdup((yyvsp[0].str)); free((yyvsp[0].str));
                         }
-#line 1452 "codel-syn.tab.c"
+#line 1451 "codel-syn.tab.c"
     break;
 
   case 30: /* int_arithmetic_expression: INTEGER  */
-#line 144 "codel-syn.y"
+#line 143 "codel-syn.y"
                               {
                          (yyval.entier) = atoi((yyvsp[0].entier));
                           }
-#line 1460 "codel-syn.tab.c"
+#line 1459 "codel-syn.tab.c"
     break;
 
   case 31: /* float_arithmetic_expression: float_arithmetic_expression arithmetic_operator float_arithmetic_expression  */
-#line 149 "codel-syn.y"
+#line 148 "codel-syn.y"
                                                                                                          { 
     (yyval.real) = ((yyvsp[-2].real)) + ((yyvsp[0].real));
      
@@ -1469,86 +1468,86 @@ yyreduce:
                         else
                             (yyval.real) = (yyvsp[-2].real) / (yyvsp[0].real);
                          }
-#line 1473 "codel-syn.tab.c"
+#line 1472 "codel-syn.tab.c"
     break;
 
   case 32: /* float_arithmetic_expression: MINUS float_arithmetic_expression  */
-#line 157 "codel-syn.y"
+#line 156 "codel-syn.y"
                                                                      { (yyval.real) = -((yyvsp[0].real)); }
-#line 1479 "codel-syn.tab.c"
+#line 1478 "codel-syn.tab.c"
     break;
 
   case 33: /* float_arithmetic_expression: ID  */
-#line 158 "codel-syn.y"
+#line 157 "codel-syn.y"
                          { 
                         if (searchSymbol(symbolTable, (yyvsp[0].str)) == NULL) {
                             yyerror("Undeclared variable used in assignment");
                         }
                         (yyval.real) = atof((yyvsp[0].str)); free((yyvsp[0].str));
                         }
-#line 1490 "codel-syn.tab.c"
+#line 1489 "codel-syn.tab.c"
     break;
 
   case 34: /* float_arithmetic_expression: REAL  */
-#line 164 "codel-syn.y"
+#line 163 "codel-syn.y"
                            { 
                         (yyval.real) = (yyvsp[0].real);
                          }
-#line 1498 "codel-syn.tab.c"
+#line 1497 "codel-syn.tab.c"
     break;
 
   case 38: /* instruction: assign_ins error  */
-#line 172 "codel-syn.y"
+#line 171 "codel-syn.y"
                                            { yyerror("Missing SEMICOLON after assign instruction");}
-#line 1504 "codel-syn.tab.c"
+#line 1503 "codel-syn.tab.c"
     break;
 
   case 51: /* for_loop_head: FOR PARENTH_OPEN assign_ins error condition error assign_ins PARENTH_CLOSE  */
-#line 186 "codel-syn.y"
+#line 185 "codel-syn.y"
                                                                                              { yyerror("Missing COMMAS in forloop head"); }
-#line 1510 "codel-syn.tab.c"
+#line 1509 "codel-syn.tab.c"
     break;
 
   case 55: /* condition: PARENTH_OPEN expression_condition PARENTH_CLOSE  */
-#line 194 "codel-syn.y"
+#line 193 "codel-syn.y"
                                                                        { (yyval.boolean) = (yyvsp[-1].boolean); }
-#line 1516 "codel-syn.tab.c"
+#line 1515 "codel-syn.tab.c"
     break;
 
   case 56: /* condition: NOT condition  */
-#line 195 "codel-syn.y"
+#line 194 "codel-syn.y"
                                       { (yyval.boolean) = !(yyvsp[0].boolean); }
-#line 1522 "codel-syn.tab.c"
+#line 1521 "codel-syn.tab.c"
     break;
 
   case 64: /* expression_condition: ID  */
-#line 200 "codel-syn.y"
+#line 199 "codel-syn.y"
                            {
                     if (searchSymbol(symbolTable, (yyvsp[0].str)) == NULL) {
                     yyerror("Undeclared variable used in assignment");
                     }
                     }
-#line 1532 "codel-syn.tab.c"
+#line 1531 "codel-syn.tab.c"
     break;
 
   case 65: /* expression_condition: INTEGER  */
-#line 205 "codel-syn.y"
+#line 204 "codel-syn.y"
                                 {
                         (yyval.boolean) = (yyvsp[0].entier);
                         }
-#line 1540 "codel-syn.tab.c"
+#line 1539 "codel-syn.tab.c"
     break;
 
   case 66: /* expression_condition: REAL  */
-#line 208 "codel-syn.y"
+#line 207 "codel-syn.y"
                              {
                         (yyval.boolean) = (yyvsp[0].real);
                         }
-#line 1548 "codel-syn.tab.c"
+#line 1547 "codel-syn.tab.c"
     break;
 
 
-#line 1552 "codel-syn.tab.c"
+#line 1551 "codel-syn.tab.c"
 
       default: break;
     }
@@ -1746,7 +1745,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 220 "codel-syn.y"
+#line 219 "codel-syn.y"
 
 
 int main() {
@@ -1754,6 +1753,7 @@ int main() {
     yyparse();
     // print_tree(yyroot);
     printSymbolTable(symbolTable);  // Print the symbol table at the end
+    freeSymbolTable(symbolTable);
     return 0;
 }
 

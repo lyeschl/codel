@@ -67,3 +67,25 @@ void printSymbolTable(SymbolTable* table) {
         current = current->next;
     }
 }
+// Function to free a single SymbolEntry
+void freeSymbolEntry(SymbolEntry* entry) {
+    free(entry->identifier);
+    free(entry->type);
+    free(entry);
+}
+
+// Function to free the entire SymbolTable
+void freeSymbolTable(SymbolTable* table) {
+    SymbolEntry* current = table->head;
+    SymbolEntry* next;
+
+    // Free each SymbolEntry in the table
+    while (current != NULL) {
+        next = current->next;
+        freeSymbolEntry(current);
+        current = next;
+    }
+
+    // Finally, free the SymbolTable itself
+    free(table);
+}
