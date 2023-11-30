@@ -719,7 +719,7 @@ YY_DECL
 		}
 
 	{
-#line 68 "codel-lex.l"
+#line 69 "codel-lex.l"
 
 
 #line 725 "lex.yy.c"
@@ -791,7 +791,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 70 "codel-lex.l"
+#line 71 "codel-lex.l"
 {
   push(&parenth_stack, '(');
   return PARENTH_OPEN;
@@ -799,7 +799,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 75 "codel-lex.l"
+#line 76 "codel-lex.l"
 {
   if (stackIsEmpty(&parenth_stack)) {
     exit(EXIT_FAILURE);
@@ -810,7 +810,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 83 "codel-lex.l"
+#line 84 "codel-lex.l"
 {
   push(&bracket_stack, '{');
   return BRACKET_OPEN;
@@ -818,7 +818,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 88 "codel-lex.l"
+#line 89 "codel-lex.l"
 {
   if (stackIsEmpty(&bracket_stack)) {
     printf("Error: Unmatched closing bracket '%s' at line %d\n", yytext, current_line);
@@ -831,7 +831,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 98 "codel-lex.l"
+#line 99 "codel-lex.l"
 {
   yylval.entier = atoi(yytext);
   return INTEGER;
@@ -839,7 +839,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 103 "codel-lex.l"
+#line 104 "codel-lex.l"
 {
   if (yyleng > 10){
     printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
@@ -857,19 +857,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 117 "codel-lex.l"
+#line 118 "codel-lex.l"
 
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 118 "codel-lex.l"
+#line 119 "codel-lex.l"
 {
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 121 "codel-lex.l"
+#line 122 "codel-lex.l"
 {
   printf("Error: Invalid character '%s' at line %d\n", yytext, yylineno);
   exit(EXIT_FAILURE);
@@ -877,7 +877,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 125 "codel-lex.l"
+#line 126 "codel-lex.l"
 ECHO;
 	YY_BREAK
 #line 883 "lex.yy.c"
@@ -1897,7 +1897,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 125 "codel-lex.l"
+#line 126 "codel-lex.l"
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
