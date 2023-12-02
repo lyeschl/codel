@@ -14,4 +14,6 @@ bool stackIsEmpty(stack *s);
 void push(stack *s, char c);
 char pop(stack *s);
 
+
+
 #endif /* STACK_H */

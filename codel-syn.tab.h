@@ -54,8 +54,8 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    BEGIN = 258,                   /* BEGIN  */
-    END = 259,                     /* END  */
+    kw_BEGIN = 258,                /* kw_BEGIN  */
+    kw_END = 259,                  /* kw_END  */
     CONST = 260,                   /* CONST  */
     TRUE = 261,                    /* TRUE  */
     FALSE = 262,                   /* FALSE  */
@@ -87,8 +87,7 @@ extern int yydebug;
     FOR = 288,                     /* FOR  */
     IF = 289,                      /* IF  */
     ELSE = 290,                    /* ELSE  */
-    HASHTAG = 291,                 /* HASHTAG  */
-    UMINUS = 292                   /* UMINUS  */
+    UMINUS = 291                   /* UMINUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -97,14 +96,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "codel-syn.y"
+#line 37 "codel-syn.y"
 
 int     entier;
 char*   str;
 double  real;
 int    boolean;
 
-#line 108 "codel-syn.tab.h"
+#line 107 "codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

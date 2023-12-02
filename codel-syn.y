@@ -8,13 +8,16 @@
 #include <string.h>
 // extern NODE *yyroot;
 #define EXIT_FAILURE 1
-char* storedID;
+
+extern SymbolTable* symbolTable;
+extern stack* parenth_stack;
+extern stack* bracket_stack;
 
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
 extern int yylineno;
-// forloop counter
+
 // Helper function to get the size of the array
 int arr_size(char** arr) {
     int size = 0;
@@ -27,6 +30,7 @@ void yyerror(const char* msg) {
     fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
     exit(EXIT_FAILURE);
 }
+
 %}
 %locations
 
@@ -37,7 +41,7 @@ double  real;
 int    boolean;
 }
 
-%token BEGIN END CONST
+%token kw_BEGIN kw_END CONST
 %token TRUE FALSE
 %token <str>BOOL 
 %token <str> INT
@@ -57,7 +61,6 @@ int    boolean;
 %token FOR
 %token IF
 %token ELSE
-%token HASHTAG
 
 
 %type <entier> int_arithmetic_expression
@@ -80,11 +83,12 @@ int    boolean;
 %start start
 %%
 
-start:                  declaration_list BEGIN instruction_list END
-                        | declaration_list error instruction_list END {yyerror("Missing BEGIN");}
-                        | declaration_list BEGIN instruction_list error {yyerror("Missing END");}
+start:                  declaration_list kw_BEGIN instruction_list kw_END
+                        | declaration_list error instruction_list kw_END {yyerror("Missing BEGIN");}
+                        | declaration_list kw_BEGIN instruction_list error {yyerror("Missing END");}
 ;
-declaration_list:       declaration_list declaration | empty_statement ;
+declaration_list: declaration_list declaration error { yyerror("Malformed declaration"); } | empty_statement ;
+
 empty_statement: ;
 declaration:            variable_declaration SEMICOLON 
                         | constant_declaration SEMICOLON 
@@ -95,13 +99,14 @@ declaration:            variable_declaration SEMICOLON
 type_specifier:        INT | FLOAT | BOOL;
 variable_declaration:  type_specifier identifier_list {
                         // Add each ID to the symbol table with type and isConstant set to False
-                        int size = arr_size($2);
+                       int size = arr_size((char**)$2);
                         for (int i = 0; i < size; i++) {
                             modifyEntry(symbolTable, $2[i], $1, false);
                             free($2[i]);
                         }
                         free($2);
                     }
+                    | variable_declaration error { yyerror("Malformed variable declaration"); }
                     ;
 
 
@@ -110,19 +115,26 @@ const_type: INT | FLOAT;
 constant_declaration: CONST const_type ID ASSIGN_OP const_arithmetic_expression {
     // Add the ID to the symbol table with type and isConstant set to True
    modifyEntry(symbolTable, $3, $2, true);
-};
+}
+                       | constant_declaration error { yyerror("Malformed constant declaration"); };
+
 const_arithmetic_expression: int_arithmetic_expression | float_arithmetic_expression;
 
 
 identifier_list: ID {
-     $$ = malloc(sizeof(char*)); $$[0] = strdup($1);
-      }
-               | identifier_list COLON ID {
-                   int size = arr_size($1);
-                   $$ = realloc($1, (size + 1) * sizeof(char*));
-                   $$[size] = strdup($3);
-               }
-               ;
+    $$ = malloc(sizeof(char*));
+    $$[0] = strdup($1);
+}
+| identifier_list COLON ID {
+    int size = arr_size((char**)$1);
+    char** tmp = realloc($1, (size + 1) * sizeof(char*));
+    if (tmp == NULL) {
+        // Handle allocation failure
+        yyerror("Memory allocation failed");
+    }
+    $$ = tmp;
+    $$[size] = strdup($3);
+};
 
 
 arithmetic_operator: PLUS | MINUS | MULT | DIV;
@@ -138,10 +150,10 @@ int_arithmetic_expression: int_arithmetic_expression arithmetic_operator int_ari
                         if (searchSymbol(symbolTable, $1) == NULL) {
                             yyerror("Undeclared variable used in assignment");
                         }
-                        $$ = strdup($1); free($1);
+                        $$ = $1; free($1);
                         }
                     | INTEGER {
-                         $$ = atoi($1);
+                         $$ = $1;
                           }
                     ;
 
@@ -217,13 +229,3 @@ empty_else: ;
 
 
 %%
-
-int main() {
-    symbolTable = createSymbolTable();
-    yyparse();
-    // print_tree(yyroot);
-    printSymbolTable(symbolTable);  // Print the symbol table at the end
-    freeSymbolTable(symbolTable);
-    return 0;
-}
-

@@ -23,5 +23,4 @@ void printSymbolTable(SymbolTable* table);
 void freeSymbolEntry(SymbolEntry* entry);
 void freeSymbolTable(SymbolTable* table);
 
-extern SymbolTable *symbolTable;
 #endif  // SYMBOL_TABLE_H

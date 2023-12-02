@@ -31,3 +31,4 @@ char pop(stack *s) {
     }
     return s->data[s->top--];
 }
+
