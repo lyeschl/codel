@@ -21,7 +21,6 @@ parenth_stack = createStack();
 bracket_stack = createStack();
 init_stack(parenth_stack, 50);
 init_stack(bracket_stack, 50);
-
     FILE *inputFile;
 
     if (argc == 1) {
@@ -95,6 +94,5 @@ init_stack(bracket_stack, 50);
 
     freeSymbolTable(symbolTable);
     return 0;
-
 }
 
