@@ -1,5 +1,6 @@
+#line 1 "src/lexer/lex.yy.c"
 
-#line 2 "lex.yy.c"
+#line 3 "src/lexer/lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -470,23 +471,16 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "codel-lex.l"
-#line 2 "codel-lex.l"
-#include "codel-syn.tab.h"
-#include "symbol_table.h"
-#include "stack.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-extern YYSTYPE yylval;
+#line 1 "src/lexer/codel-lex.l"
+#line 2 "src/lexer/codel-lex.l"
+#include "../../globals.h"
 
 void yyerror(const char* msg) {
     fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
     exit(EXIT_FAILURE);
 }
-#line 488 "lex.yy.c"
-#line 489 "lex.yy.c"
+#line 482 "src/lexer/lex.yy.c"
+#line 483 "src/lexer/lex.yy.c"
 
 #define INITIAL 0
 
@@ -703,10 +697,10 @@ YY_DECL
 		}
 
 	{
-#line 52 "codel-lex.l"
+#line 45 "src/lexer/codel-lex.l"
 
 
-#line 709 "lex.yy.c"
+#line 703 "src/lexer/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -775,7 +769,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 54 "codel-lex.l"
+#line 47 "src/lexer/codel-lex.l"
 {
   push(parenth_stack, '(');
   return PARENTH_OPEN;
@@ -783,7 +777,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 59 "codel-lex.l"
+#line 52 "src/lexer/codel-lex.l"
 {
   if (stackIsEmpty(parenth_stack)) {
     exit(EXIT_FAILURE);
@@ -794,7 +788,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 67 "codel-lex.l"
+#line 60 "src/lexer/codel-lex.l"
 {
   push(bracket_stack, '{');
   return BRACKET_OPEN;
@@ -802,7 +796,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 72 "codel-lex.l"
+#line 65 "src/lexer/codel-lex.l"
 {
   if (stackIsEmpty(bracket_stack)) {
     exit(EXIT_FAILURE);
@@ -813,7 +807,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 80 "codel-lex.l"
+#line 73 "src/lexer/codel-lex.l"
 {
   yylval.entier = atoi(yytext);
   return INTEGER;
@@ -821,7 +815,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 85 "codel-lex.l"
+#line 78 "src/lexer/codel-lex.l"
 {
   if (yyleng > 10){
     printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, yylineno);
@@ -839,19 +833,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 99 "codel-lex.l"
+#line 92 "src/lexer/codel-lex.l"
 
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 100 "codel-lex.l"
+#line 93 "src/lexer/codel-lex.l"
 {
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 103 "codel-lex.l"
+#line 96 "src/lexer/codel-lex.l"
 {
   printf("Error: Invalid character '%s' at line %d\n", yytext, yylineno);
   exit(EXIT_FAILURE);
@@ -859,10 +853,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 107 "codel-lex.l"
+#line 100 "src/lexer/codel-lex.l"
 ECHO;
 	YY_BREAK
-#line 865 "lex.yy.c"
+#line 859 "src/lexer/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1879,7 +1873,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 107 "codel-lex.l"
+#line 100 "src/lexer/codel-lex.l"
 
 int yywrap() {
     return 1;  // indicate end of input

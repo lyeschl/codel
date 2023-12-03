@@ -1,8 +1,16 @@
-clear
-flex --outfile="lex.c" codel-lex.l
-bison -d codel-syn.y -o synt.c -Wcounterexamples
-# gcc -w lex.c synt.c -lfl -ly -o codel-lex
-# rm *.c
-# rm *.h
-# echo 'end of compilation, analysing _test.txt...'
-# ./codel-lex </tests/correct_code/test1.txt
+#!/bin/bash
+
+flex -o src/lexer/lex.yy.c src/lexer/codel-lex.l
+bison -d -o src/parser/codel-syn.tab.c src/parser/codel-syn.y
+gcc -o codel src/main/main.c src/lexer/lex.yy.c src/parser/codel-syn.tab.c src/utils/*.c -ly -lfl
+
+# Run tests
+# for file in tests/correct_code/*.txt; do
+#     echo "Running test: $file"
+#     ./codel "$file"
+# done
+
+# for file in tests/incorrect_code/*.txt; do
+#     echo "Running test: $file"
+#     ./codel "$file"
+# done

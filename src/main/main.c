@@ -1,10 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "codel-syn.tab.h"
-#include "symbol_table.h"
-#include "stack.h"
-#include <stdbool.h>
-#include <string.h>
+#include "../../globals.h"
+
+SymbolTable* symbolTable;
+stack* parenth_stack;
+stack* bracket_stack;
+
+// Helper function to get the size of the array
+extern int arr_size(char** arr) {
+    int size = 0;
+    while (arr[size] != NULL) {
+        size++;
+    }
+    return size;
+}
+
 int main(int argc, char *argv[]) {
 
 symbolTable = createSymbolTable();

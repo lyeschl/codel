@@ -1,12 +1,5 @@
 %{
-#include "codel-syn.tab.h"
-#include "symbol_table.h"
-#include "stack.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-extern YYSTYPE yylval;
+#include "../../globals.h"
 
 void yyerror(const char* msg) {
     fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);

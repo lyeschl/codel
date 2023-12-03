@@ -1,35 +1,8 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
-#include "codel-syn.tab.h"
-#include "symbol_table.h"
-#include "stack.h"
-#include <stdbool.h>
-#include <string.h>
+
+#include "../../globals.h"
 // extern NODE *yyroot;
 #define EXIT_FAILURE 1
-
-extern SymbolTable* symbolTable;
-extern stack* parenth_stack;
-extern stack* bracket_stack;
-
-extern int yylex();
-extern int yyparse();
-extern FILE* yyin;
-extern int yylineno;
-
-// Helper function to get the size of the array
-int arr_size(char** arr) {
-    int size = 0;
-    while (arr[size] != NULL) {
-        size++;
-    }
-    return size;
-}
-void yyerror(const char* msg) {
-    fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
-    exit(EXIT_FAILURE);
-}
 
 %}
 %locations
@@ -49,18 +22,15 @@ int    boolean;
 %token PLUS MINUS MULT DIV  
 %token LESS GREATER NOTEQUAL LESSEQ GREATEQ EQUAL   
 %token NOT     
-%token PARENTH_OPEN
-%token PARENTH_CLOSE
-%token BRACKET_OPEN
-%token BRACKET_CLOSE
+%token PARENTH_OPEN PARENTH_CLOSE
+%token BRACKET_OPEN BRACKET_CLOSE
 %token ASSIGN_OP
 %token <entier> INTEGER 
 %token <real> REAL   
 %token <str> ID
 %token COMMA COLON SEMICOLON
 %token FOR
-%token IF
-%token ELSE
+%token IF ELSE
 
 
 %type <entier> int_arithmetic_expression
@@ -178,7 +148,8 @@ float_arithmetic_expression: float_arithmetic_expression arithmetic_operator flo
                     ;
 
 
-instruction_list:       instruction_list instruction | empty_statement;
+instruction_list:       ilp ;
+ilp:                    instruction instruction_list | ;
 instruction:             assign_ins SEMICOLON
                         | assign_ins error { yyerror("Missing SEMICOLON after assign instruction");}
                         | for_loop_ins 

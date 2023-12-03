@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_CODEL_SYN_TAB_H_INCLUDED
-# define YY_YY_CODEL_SYN_TAB_H_INCLUDED
+#ifndef YY_YY_SRC_PARSER_CODEL_SYN_TAB_H_INCLUDED
+# define YY_YY_SRC_PARSER_CODEL_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -96,14 +96,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 37 "codel-syn.y"
+#line 10 "src/parser/codel-syn.y"
 
 int     entier;
 char*   str;
 double  real;
 int    boolean;
 
-#line 107 "codel-syn.tab.h"
+#line 107 "src/parser/codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -132,4 +132,4 @@ extern YYLTYPE yylloc;
 int yyparse (void);
 
 
-#endif /* !YY_YY_CODEL_SYN_TAB_H_INCLUDED  */
+#endif /* !YY_YY_SRC_PARSER_CODEL_SYN_TAB_H_INCLUDED  */
