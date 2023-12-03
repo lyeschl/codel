@@ -3,5 +3,5 @@ INT x, y;
 BEGIN
     x := 5;
     y := x * 2;
-    z := 10;  // Error: Undeclared variable z
+    z := 10;  
 END

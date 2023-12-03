@@ -1,5 +1,5 @@
 INT x;
 
 BEGIN
-    x := "hello";  // Error: Type mismatch
+    x := "hello"; 
 END

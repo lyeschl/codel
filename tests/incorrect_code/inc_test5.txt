@@ -1,5 +1,5 @@
 INT x;
 
 BEGIN
-    x := 5 + "hello";  // Error: Invalid operation
+    x := 5 + "hello"; 
 END
