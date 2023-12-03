@@ -9,6 +9,8 @@ typedef struct stack {
     int size;
 } stack;
 
+
+stack* createStack();
 void init_stack(stack *s, int size);
 bool stackIsEmpty(stack *s);
 void push(stack *s, char c);

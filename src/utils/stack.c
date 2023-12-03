@@ -2,10 +2,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+stack* createStack() {
+    stack* s = malloc(sizeof(stack));
+    if (s == NULL) {
+        fprintf(stderr, "Error: Memory allocation for stack failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    // Initialize other members of the stack structure if needed
+    return s;
+}
+
 void init_stack(stack *s, int size) {
+    if (s == NULL) {
+        // Handle the case where s is NULL
+        fprintf(stderr, "Error: Attempt to initialize a NULL stack pointer.\n");
+        exit(EXIT_FAILURE);
+    }
+
     s->data = malloc(sizeof(char) * size);
     if (s->data == NULL) {
-        printf("Memory allocation failed\n");
+        fprintf(stderr, "Error: Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
     s->top = -1;

@@ -7,7 +7,9 @@
 #include "src/utils/symbol_table.h"  // Include the header file for your symbol table implementation
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "src/parser/codel-syn.tab.h"
+
 extern stack* parenth_stack;
 extern stack* bracket_stack;
 extern SymbolTable* symbolTable;
