@@ -1,5 +1,8 @@
 
 ### TODO
+- codel executes, but every program gets this error
+Error at line 1: syntax erro
+
 - make start: declist endl BEGIN endl inst_list END // add endl
 - IDs are inserted in sym table in flex, in bison, when finding an ID in a cst dec , modify its Entry with new details
 - double declarations: everytime we read a variable, exec function that checks if it exists in symbol table
