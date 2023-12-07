@@ -150,7 +150,12 @@ instruction:             assign_ins SEMICOLON
 ;
 bool_value:         TRUE | FALSE;
 assign_ins_bool:    ID ASSIGN_OP bool_value ;
-assign_ins:         ID ASSIGN_OP expression | assign_ins_bool;
+assign_ins:         ID ASSIGN_OP expression {
+            if (identificateurNonDecl($1))
+            {
+                yyerror("Undeclared ID");
+            }
+        }| assign_ins_bool;
 
 for_loop_ins:   for_loop_head for_loop_body;
 
