@@ -19,7 +19,7 @@ int     boolean;
 }
 
 %token kw_BEGIN kw_END CONST
-%token TRUE FALSE
+%token val_TRUE val_FALSE
 %token <str>BOOL 
 %token <str> INT
 %token <str> FLOAT  
@@ -148,7 +148,7 @@ instruction:             assign_ins SEMICOLON
                         | for_loop_ins 
                         | if_ins
 ;
-bool_value:         TRUE | FALSE;
+bool_value:         val_TRUE | val_FALSE;
 assign_ins_bool:    ID ASSIGN_OP bool_value ;
 assign_ins:         ID ASSIGN_OP expression {
             if (identificateurNonDecl($1))

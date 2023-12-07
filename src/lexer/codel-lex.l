@@ -50,8 +50,8 @@ comment            \{[^}]*\}
 "BOOL" return BOOL;
 "FLOAT" return FLOAT;
 "INT" return INT;
-"True" return TRUE;
-"False" return FALSE;
+"True" return val_TRUE;
+"False" return val_FALSE;
 "BEGIN"   return kw_BEGIN;
 "END"     return kw_END;
 

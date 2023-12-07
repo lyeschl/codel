@@ -113,8 +113,8 @@ enum yysymbol_kind_t
   YYSYMBOL_kw_BEGIN = 3,                   /* kw_BEGIN  */
   YYSYMBOL_kw_END = 4,                     /* kw_END  */
   YYSYMBOL_CONST = 5,                      /* CONST  */
-  YYSYMBOL_TRUE = 6,                       /* TRUE  */
-  YYSYMBOL_FALSE = 7,                      /* FALSE  */
+  YYSYMBOL_val_TRUE = 6,                   /* val_TRUE  */
+  YYSYMBOL_val_FALSE = 7,                  /* val_FALSE  */
   YYSYMBOL_BOOL = 8,                       /* BOOL  */
   YYSYMBOL_INT = 9,                        /* INT  */
   YYSYMBOL_FLOAT = 10,                     /* FLOAT  */
@@ -577,9 +577,9 @@ static const yytype_uint8 yyrline[] =
       79,    87,    88,    90,    98,   100,   100,   103,   105,   108,
      110,   112,   114,   117,   119,   121,   123,   125,   127,   130,
      132,   144,   145,   145,   146,   147,   148,   149,   151,   151,
-     152,   153,   153,   155,   157,   158,   159,   160,   160,   161,
-     161,   163,   164,   166,   167,   168,   171,   172,   173,   173,
-     174
+     152,   153,   158,   160,   162,   163,   164,   165,   165,   166,
+     166,   168,   169,   171,   172,   173,   176,   177,   178,   178,
+     179
 };
 #endif
 
@@ -596,20 +596,20 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "kw_BEGIN", "kw_END",
-  "CONST", "TRUE", "FALSE", "BOOL", "INT", "FLOAT", "PLUS", "MINUS",
-  "MULT", "DIV", "INC", "LESS", "GREATER", "EQUAL", "NOT", "PARENTH_OPEN",
-  "PARENTH_CLOSE", "BRACKET_OPEN", "BRACKET_CLOSE", "ASSIGN_OP", "INTEGER",
-  "REAL", "ID", "COMMA", "COLON", "SEMICOLON", "FOR", "IF", "ELSE",
-  "NOTEQUAL", "LESSEQ", "GREATEQ", "UMINUS", "$accept", "start",
-  "declaration_list", "empty_statement", "declaration", "type_specifier",
-  "variable_declaration", "var_dec_id_list", "var_dec_id", "const_type",
-  "constant_declaration", "const_value", "expression", "operator",
-  "logical_operator", "operand", "instruction_list", "ilp", "instruction",
-  "bool_value", "assign_ins_bool", "assign_ins", "for_loop_ins",
-  "for_loop_head", "for_loop_head_init", "for_loop_head_cond",
-  "for_loop_head_incr", "for_loop_body", "for_loop_instructions",
-  "expression_condition", "condition", "if_ins", "body", "else_part",
-  "empty_else", YY_NULLPTR
+  "CONST", "val_TRUE", "val_FALSE", "BOOL", "INT", "FLOAT", "PLUS",
+  "MINUS", "MULT", "DIV", "INC", "LESS", "GREATER", "EQUAL", "NOT",
+  "PARENTH_OPEN", "PARENTH_CLOSE", "BRACKET_OPEN", "BRACKET_CLOSE",
+  "ASSIGN_OP", "INTEGER", "REAL", "ID", "COMMA", "COLON", "SEMICOLON",
+  "FOR", "IF", "ELSE", "NOTEQUAL", "LESSEQ", "GREATEQ", "UMINUS",
+  "$accept", "start", "declaration_list", "empty_statement", "declaration",
+  "type_specifier", "variable_declaration", "var_dec_id_list",
+  "var_dec_id", "const_type", "constant_declaration", "const_value",
+  "expression", "operator", "logical_operator", "operand",
+  "instruction_list", "ilp", "instruction", "bool_value",
+  "assign_ins_bool", "assign_ins", "for_loop_ins", "for_loop_head",
+  "for_loop_head_init", "for_loop_head_cond", "for_loop_head_incr",
+  "for_loop_body", "for_loop_instructions", "expression_condition",
+  "condition", "if_ins", "body", "else_part", "empty_else", YY_NULLPTR
 };
 
 static const char *
@@ -1474,14 +1474,25 @@ yyreduce:
 #line 1475 "src/parser/codel-syn.tab.c"
     break;
 
+  case 51: /* assign_ins: ID ASSIGN_OP expression  */
+#line 153 "src/parser/codel-syn.y"
+                                            {
+            if (identificateurNonDecl((yyvsp[-2].str)))
+            {
+                yyerror("Undeclared ID");
+            }
+        }
+#line 1486 "src/parser/codel-syn.tab.c"
+    break;
+
   case 55: /* for_loop_head: FOR PARENTH_OPEN assign_ins error condition error assign_ins PARENTH_CLOSE  */
-#line 158 "src/parser/codel-syn.y"
+#line 163 "src/parser/codel-syn.y"
                                                                                              { yyerror("Missing COMMAS in forloop head"); }
-#line 1481 "src/parser/codel-syn.tab.c"
+#line 1492 "src/parser/codel-syn.tab.c"
     break;
 
 
-#line 1485 "src/parser/codel-syn.tab.c"
+#line 1496 "src/parser/codel-syn.tab.c"
 
       default: break;
     }
@@ -1679,5 +1690,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 177 "src/parser/codel-syn.y"
+#line 182 "src/parser/codel-syn.y"
 

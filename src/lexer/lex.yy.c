@@ -926,12 +926,12 @@ return INT;
 case 27:
 YY_RULE_SETUP
 #line 53 "src/lexer/codel-lex.l"
-return TRUE;
+return val_TRUE;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 54 "src/lexer/codel-lex.l"
-return FALSE;
+return val_FALSE;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP

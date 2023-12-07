@@ -1,5 +1,4 @@
 INT x, y;
-
 BEGIN
     x := 5;
     y := x * 2;

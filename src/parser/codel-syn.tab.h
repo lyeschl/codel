@@ -57,8 +57,8 @@ extern int yydebug;
     kw_BEGIN = 258,                /* kw_BEGIN  */
     kw_END = 259,                  /* kw_END  */
     CONST = 260,                   /* CONST  */
-    TRUE = 261,                    /* TRUE  */
-    FALSE = 262,                   /* FALSE  */
+    val_TRUE = 261,                /* val_TRUE  */
+    val_FALSE = 262,               /* val_FALSE  */
     BOOL = 263,                    /* BOOL  */
     INT = 264,                     /* INT  */
     FLOAT = 265,                   /* FLOAT  */

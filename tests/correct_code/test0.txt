@@ -1,0 +1,4 @@
+INT x;
+BEGIN 
+x:=10;
+END
