@@ -66,28 +66,29 @@ extern int yydebug;
     MINUS = 267,                   /* MINUS  */
     MULT = 268,                    /* MULT  */
     DIV = 269,                     /* DIV  */
-    LESS = 270,                    /* LESS  */
-    GREATER = 271,                 /* GREATER  */
-    NOTEQUAL = 272,                /* NOTEQUAL  */
-    LESSEQ = 273,                  /* LESSEQ  */
-    GREATEQ = 274,                 /* GREATEQ  */
-    EQUAL = 275,                   /* EQUAL  */
-    NOT = 276,                     /* NOT  */
-    PARENTH_OPEN = 277,            /* PARENTH_OPEN  */
-    PARENTH_CLOSE = 278,           /* PARENTH_CLOSE  */
-    BRACKET_OPEN = 279,            /* BRACKET_OPEN  */
-    BRACKET_CLOSE = 280,           /* BRACKET_CLOSE  */
-    ASSIGN_OP = 281,               /* ASSIGN_OP  */
-    INTEGER = 282,                 /* INTEGER  */
-    REAL = 283,                    /* REAL  */
-    ID = 284,                      /* ID  */
-    COMMA = 285,                   /* COMMA  */
-    COLON = 286,                   /* COLON  */
-    SEMICOLON = 287,               /* SEMICOLON  */
-    FOR = 288,                     /* FOR  */
-    IF = 289,                      /* IF  */
-    ELSE = 290,                    /* ELSE  */
-    UMINUS = 291                   /* UMINUS  */
+    INC = 270,                     /* INC  */
+    LESS = 271,                    /* LESS  */
+    GREATER = 272,                 /* GREATER  */
+    EQUAL = 273,                   /* EQUAL  */
+    NOT = 274,                     /* NOT  */
+    PARENTH_OPEN = 275,            /* PARENTH_OPEN  */
+    PARENTH_CLOSE = 276,           /* PARENTH_CLOSE  */
+    BRACKET_OPEN = 277,            /* BRACKET_OPEN  */
+    BRACKET_CLOSE = 278,           /* BRACKET_CLOSE  */
+    ASSIGN_OP = 279,               /* ASSIGN_OP  */
+    INTEGER = 280,                 /* INTEGER  */
+    REAL = 281,                    /* REAL  */
+    ID = 282,                      /* ID  */
+    COMMA = 283,                   /* COMMA  */
+    COLON = 284,                   /* COLON  */
+    SEMICOLON = 285,               /* SEMICOLON  */
+    FOR = 286,                     /* FOR  */
+    IF = 287,                      /* IF  */
+    ELSE = 288,                    /* ELSE  */
+    NOTEQUAL = 289,                /* NOTEQUAL  */
+    LESSEQ = 290,                  /* LESSEQ  */
+    GREATEQ = 291,                 /* GREATEQ  */
+    UMINUS = 292                   /* UMINUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -96,14 +97,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 10 "src/parser/codel-syn.y"
+#line 14 "src/parser/codel-syn.y"
 
 int     entier;
 char*   str;
 double  real;
-int    boolean;
+int     boolean;
 
-#line 107 "src/parser/codel-syn.tab.h"
+#line 108 "src/parser/codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

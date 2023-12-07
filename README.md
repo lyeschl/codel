@@ -1,5 +1,8 @@
 
+## DONE
+- remove checking existence of ID in lex, that should be done in bison
 ### TODO
+- might simplify expressions like buzid's
 - tried debuging with gdb, seems like there is an error inside yyparse()
 - is the new complexity i added to main really necessary?
 - codel executes, but every program gets this error
