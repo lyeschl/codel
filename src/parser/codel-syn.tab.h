@@ -87,8 +87,7 @@ extern int yydebug;
     ELSE = 288,                    /* ELSE  */
     NOTEQUAL = 289,                /* NOTEQUAL  */
     LESSEQ = 290,                  /* LESSEQ  */
-    GREATEQ = 291,                 /* GREATEQ  */
-    UMINUS = 292                   /* UMINUS  */
+    GREATEQ = 291                  /* GREATEQ  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -104,7 +103,7 @@ char*   str;
 double  real;
 int     boolean;
 
-#line 108 "src/parser/codel-syn.tab.h"
+#line 107 "src/parser/codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -1,0 +1,5 @@
+INT x;
+INT i,a,b;
+BEGIN
+for (i:=0,i<10,i++){ a++; b++; }
+END

@@ -42,7 +42,6 @@ int     boolean;
 %left NOT
 %left EQUAL NOTEQUAL
 %left LESS GREATER LESSEQ GREATEQ
-%right UMINUS  // Unary minus
 
 
 %start start
@@ -178,14 +177,16 @@ assign_ins:
                     }
                     |
                     assign_ins_bool;
+                    |
+                     ID INC ;
 
 for_loop_ins:
-                   for_loop_head for_loop_body;
+                   for_loop_head for_loop_body { printf("for loop here!");};
 
 for_loop_head:
-                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE
+                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE 
                 |
-                FOR PARENTH_OPEN assign_ins error condition error assign_ins PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
+                FOR PARENTH_OPEN for_loop_head_init for_loop_head_cond for_loop_head_incr PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
 
 for_loop_head_init:
                  ID ASSIGN_OP operand;
@@ -199,9 +200,13 @@ for_loop_head_incr:
                  INC ID;
 
 for_loop_body:
-                  BRACKET_OPEN for_loop_instructions BRACKET_CLOSE;
+                  BRACKET_OPEN for_loop_instructions BRACKET_CLOSE
+                  |
+                  for_loop_instructions_none;
 for_loop_instructions:
-                 instruction_list ;
+                  instruction_list;
+for_loop_instructions_none: ;
+
 
 expression_condition:
                    operand logical_operator operand ;
