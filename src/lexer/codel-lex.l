@@ -1,9 +1,9 @@
 %{
 #include "../../globals.h"
-int current_line = 1;
+int current_line = 0;
 extern YYSTYPE yylval;
 void yyerror(const char* msg) {
-  fprintf(stderr, "Error at line %d: %s\n", yylineno, msg);
+  fprintf(stderr, "Error at line %d: %s\n", current_line, msg);
   exit(EXIT_FAILURE);
 }
 %}
@@ -47,9 +47,6 @@ comment            \{[^}]*\}
 "if" return IF;
 "else" return ELSE;
 "CONST" return CONST;
-"BOOL" return BOOL;
-"FLOAT" return FLOAT;
-"INT" return INT;
 "True" return val_TRUE;
 "False" return val_FALSE;
 "BEGIN"   return kw_BEGIN;
@@ -58,6 +55,10 @@ comment            \{[^}]*\}
 {INTEGER} {
   yylval.entier = atoi(yytext);
   return INTEGER;
+}
+{REAL} {
+  yylval.entier = atof(yytext);
+  return REAL;
 }
 
 {ID} {

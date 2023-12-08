@@ -1,4 +1,6 @@
-INT x;
-BEGIN 
-x:=10;
+BOOL x ;
+BOOL y ;
+CONST FLOAT w := 10.34 ;
+BEGIN
+y := True ;
 END

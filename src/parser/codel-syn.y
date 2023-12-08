@@ -18,20 +18,21 @@ double  real;
 int     boolean;
 }
 
-%token kw_BEGIN kw_END CONST
+%token kw_BEGIN kw_END 
+%token CONST
 %token val_TRUE val_FALSE
 %token <str>BOOL 
-%token <str> INT
-%token <str> FLOAT  
+%token <str>INT
+%token <str>FLOAT  
 %token PLUS MINUS MULT DIV INC
 %token LESS GREATER EQUAL   
 %token NOT     
 %token PARENTH_OPEN PARENTH_CLOSE
 %token BRACKET_OPEN BRACKET_CLOSE
 %token ASSIGN_OP
-%token <entier> INTEGER 
-%token <real> REAL   
-%token <str> ID
+%token <entier>INTEGER 
+%token <real>REAL   
+%token <str>ID
 %token COMMA COLON SEMICOLON
 %token FOR
 %token IF ELSE
@@ -47,17 +48,17 @@ int     boolean;
 %start start
 %%
 
-start:                  declaration_list kw_BEGIN instruction_list kw_END {printf("correct syntax (neither import nor var decl)\n"); YYACCEPT;}
-                        | declaration_list error instruction_list kw_END {yyerror("Missing BEGIN");}
-                        | declaration_list kw_BEGIN instruction_list error {yyerror("Missing END");}
+start:                  declaration_list kw_BEGIN instruction_list kw_END {printf("correct syntax \n"); YYACCEPT;}
+                        | declaration_list instruction_list kw_END {yyerror("Missing BEGIN");}
+                        | declaration_list kw_BEGIN instruction_list {yyerror("Missing END");}
+                        | declaration_list instruction_list {yyerror("Missing BEGIN and END");}
 ;
-declaration_list: declaration declaration_list error { yyerror("Malformed declaration"); } | empty_statement ;
+declaration_list:       declaration declaration_list  | ;
 
-empty_statement: ;
 declaration:            variable_declaration SEMICOLON 
                         | constant_declaration SEMICOLON 
-                        | variable_declaration error { yyerror("Missing SEMICOLON after variable declaration");}
-                        | constant_declaration error { yyerror("Missing SEMICOLON after constant declaration");}
+                        | variable_declaration { yyerror("Missing SEMICOLON after variable declaration");}
+                        | constant_declaration { yyerror("Missing SEMICOLON after constant declaration");}
 ;
 
 type_specifier:        INT {strcpy(save_type,$1);}
@@ -65,7 +66,6 @@ type_specifier:        INT {strcpy(save_type,$1);}
                     | BOOL {strcpy(save_type,$1);}
 ;     
 variable_declaration:  type_specifier var_dec_id_list
-                    | variable_declaration error { yyerror("Malformed variable declaration"); }
                     ;
 var_dec_id_list:       var_dec_id COMMA var_dec_id_list | var_dec_id ;
 var_dec_id:         ID {
@@ -92,7 +92,7 @@ constant_declaration: CONST const_type ID ASSIGN_OP const_value {
        if (!doubleDeclaration($3))
         {
             insererType($3, save_type);
-            insererConst($3,0);
+            insererConst($3,1);
         }
 }
                        | constant_declaration error { yyerror("Malformed constant declaration"); };
@@ -130,13 +130,7 @@ operand:
         const_value
         |
         ID {
-            if (identificateurNonDecl($1))
-            {
-                yyerror("Undeclared ID");
-                // if (current_io_operation)
-                    // enqueue_io_param_type_by_symbol($1);
-                /* cas normal */
-            }
+            identificateurNonDecl($1);
         }
         ;
 
@@ -151,10 +145,7 @@ instruction:             assign_ins SEMICOLON
 bool_value:         val_TRUE | val_FALSE;
 assign_ins_bool:    ID ASSIGN_OP bool_value ;
 assign_ins:         ID ASSIGN_OP expression {
-            if (identificateurNonDecl($1))
-            {
-                yyerror("Undeclared ID");
-            }
+            identificateurNonDecl($1);
         }| assign_ins_bool;
 
 for_loop_ins:   for_loop_head for_loop_body;
@@ -175,8 +166,7 @@ condition:             PARENTH_OPEN expression_condition PARENTH_CLOSE
 
 if_ins: IF condition BRACKET_OPEN body BRACKET_CLOSE else_part;
 body: instruction_list;
-else_part: empty_else| ELSE BRACKET_OPEN body BRACKET_CLOSE;
-empty_else: ;
+else_part: | ELSE BRACKET_OPEN body BRACKET_CLOSE;
 
 
 %%
