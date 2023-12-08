@@ -48,27 +48,45 @@ int     boolean;
 %start start
 %%
 
-start:                  declaration_list kw_BEGIN instruction_list kw_END {printf("correct syntax \n"); YYACCEPT;}
-                        | declaration_list instruction_list kw_END {yyerror("Missing BEGIN");}
-                        | declaration_list kw_BEGIN instruction_list {yyerror("Missing END");}
-                        | declaration_list instruction_list {yyerror("Missing BEGIN and END");}
+start:        
+                        declaration_list kw_BEGIN instruction_list kw_END {printf("correct syntax \n"); YYACCEPT;}
+                        |
+                        declaration_list instruction_list kw_END {yyerror("Missing BEGIN");}
+                        |
+                        declaration_list kw_BEGIN instruction_list {yyerror("Missing END");}
+                        |
+                        declaration_list instruction_list {yyerror("Missing BEGIN and END");}
 ;
-declaration_list:       declaration declaration_list  | ;
+declaration_list:       
+                        declaration declaration_list  | ;
 
-declaration:            variable_declaration SEMICOLON 
-                        | constant_declaration SEMICOLON 
-                        | variable_declaration { yyerror("Missing SEMICOLON after variable declaration");}
-                        | constant_declaration { yyerror("Missing SEMICOLON after constant declaration");}
+declaration:
+                        variable_declaration SEMICOLON 
+                        | 
+                        constant_declaration SEMICOLON 
+                        |
+                        variable_declaration { yyerror("Missing SEMICOLON after variable declaration");}
+                        |
+                        constant_declaration { yyerror("Missing SEMICOLON after constant declaration");}
 ;
 
-type_specifier:        INT {strcpy(save_type,$1);}
-                    | FLOAT {strcpy(save_type,$1);}
-                    | BOOL {strcpy(save_type,$1);}
+type_specifier: 
+                    INT {strcpy(save_type,$1);}
+                    | 
+                    FLOAT {strcpy(save_type,$1);}
+                    |
+                    BOOL {strcpy(save_type,$1);}
 ;     
-variable_declaration:  type_specifier var_dec_id_list
+variable_declaration:
+                      type_specifier var_dec_id_list
                     ;
-var_dec_id_list:       var_dec_id COMMA var_dec_id_list | var_dec_id ;
-var_dec_id:         ID {
+var_dec_id_list:
+                        var_dec_id COMMA var_dec_id_list 
+                        |
+                        var_dec_id ;
+
+var_dec_id:
+         ID {
         if (!doubleDeclaration($1))
         {
             insererType($1, save_type);
@@ -84,10 +102,13 @@ var_dec_id:         ID {
         }
 }
 ;
-const_type: INT {strcpy(save_type,$1);} 
-            | FLOAT {strcpy(save_type,$1);};
+const_type:
+            INT {strcpy(save_type,$1);} 
+            |
+            FLOAT {strcpy(save_type,$1);};
 
-constant_declaration: CONST const_type ID ASSIGN_OP const_value {
+constant_declaration:
+                         CONST const_type ID ASSIGN_OP const_value {
     // Add the ID to the symbol table with type and isConstant set to True
        if (!doubleDeclaration($3))
         {
@@ -95,9 +116,12 @@ constant_declaration: CONST const_type ID ASSIGN_OP const_value {
             insererConst($3,1);
         }
 }
-                       | constant_declaration error { yyerror("Malformed constant declaration"); };
+                       | CONST const_type ID { yyerror("Malformed constant declaration"); };
 
-const_value: INTEGER | REAL;
+const_value:
+             INTEGER 
+             |
+             REAL;
 
 expression:
         operand operator expression 
@@ -135,38 +159,69 @@ operand:
         ;
 
 
-instruction_list:       ilp ;
-ilp:                    instruction instruction_list | ;
-instruction:             assign_ins SEMICOLON
+instruction_list:   
+                        instruction instruction_list | ;
+
+
+instruction:
+                         assign_ins SEMICOLON
                         | assign_ins error { yyerror("Missing SEMICOLON after assign instruction");}
                         | for_loop_ins 
                         | if_ins
 ;
-bool_value:         val_TRUE | val_FALSE;
+bool_value:         
+                    val_TRUE 
+                    |
+                    val_FALSE;
+
 assign_ins_bool:    ID ASSIGN_OP bool_value ;
-assign_ins:         ID ASSIGN_OP expression {
-            identificateurNonDecl($1);
-        }| assign_ins_bool;
 
-for_loop_ins:   for_loop_head for_loop_body;
+assign_ins:
+                    ID ASSIGN_OP expression {
+                        identificateurNonDecl($1);
+                    }
+                    |
+                    assign_ins_bool;
 
-for_loop_head: FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE
-                | FOR PARENTH_OPEN assign_ins error condition error assign_ins PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
-for_loop_head_init: ID ASSIGN_OP operand;
-for_loop_head_cond: ID logical_operator operand | operand logical_operator ID;
-for_loop_head_incr: ID INC | INC ID;
+for_loop_ins:
+                   for_loop_head for_loop_body;
 
-for_loop_body:  BRACKET_OPEN for_loop_instructions BRACKET_CLOSE;
-for_loop_instructions: instruction_list ;
+for_loop_head:
+                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE
+                |
+                FOR PARENTH_OPEN assign_ins error condition error assign_ins PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
 
-expression_condition:   operand logical_operator operand ;
-condition:             PARENTH_OPEN expression_condition PARENTH_CLOSE 
-                    |   NOT condition 
+for_loop_head_init:
+                 ID ASSIGN_OP operand;
+
+for_loop_head_cond:
+                 ID logical_operator operand | operand logical_operator ID;
+
+for_loop_head_incr:
+                 ID INC 
+                 |
+                 INC ID;
+
+for_loop_body:
+                  BRACKET_OPEN for_loop_instructions BRACKET_CLOSE;
+for_loop_instructions:
+                 instruction_list ;
+
+expression_condition:
+                   operand logical_operator operand ;
+
+condition:
+                    PARENTH_OPEN expression_condition PARENTH_CLOSE 
+                    |
+                    NOT condition 
                     ;
 
-if_ins: IF condition BRACKET_OPEN body BRACKET_CLOSE else_part;
-body: instruction_list;
-else_part: | ELSE BRACKET_OPEN body BRACKET_CLOSE;
+if_ins:
+                     IF condition BRACKET_OPEN body BRACKET_CLOSE else_part;
+body:
+                     instruction_list;
+else_part:          |
+                     ELSE BRACKET_OPEN body BRACKET_CLOSE;
 
 
 %%

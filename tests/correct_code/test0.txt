@@ -1,6 +1,11 @@
 BOOL x ;
-BOOL y ;
-CONST FLOAT w := 10.34 ;
+INT a ;
+INT b ;
+INT sum ;
+CONST BOOL y ;
 BEGIN
 y := True ;
+a := 1;
+b := 2;
+sum := a + b ;
 END
