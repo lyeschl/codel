@@ -86,22 +86,16 @@ var_dec_id_list:
                         var_dec_id ;
 
 var_dec_id:
-         ID {
+        ID {
+        doubleDeclaration($1);
         if (!doubleDeclaration($1))
         {
             insererType($1, save_type);
             insererConst($1,0);
         }
     }
-
-                    | ID ASSIGN_OP const_value {
-        if (!doubleDeclaration($1))
-        {
-            insererType($1, save_type);
-            insererConst($1,0);
-        }
-}
 ;
+
 const_type:
             INT {strcpy(save_type,$1);} 
             |
@@ -174,7 +168,9 @@ bool_value:
                     |
                     val_FALSE;
 
-assign_ins_bool:    ID ASSIGN_OP bool_value ;
+assign_ins_bool:    ID ASSIGN_OP bool_value {
+    identificateurNonDecl($1);
+} ;
 
 assign_ins:
                     ID ASSIGN_OP expression {
