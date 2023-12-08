@@ -1,6 +1,6 @@
 %{
 #include "../../globals.h"
-int current_line = 0;
+int current_line = 1;
 extern YYSTYPE yylval;
 void yyerror(const char* msg) {
   fprintf(stderr, "Error at line %d: %s\n", current_line, msg);

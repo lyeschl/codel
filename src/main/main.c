@@ -2,6 +2,7 @@
 int main()
 {
     init();
+    yylex();
     yyparse();
     display_symbol_table();
     return 0;

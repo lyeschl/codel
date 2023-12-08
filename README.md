@@ -2,11 +2,9 @@
 ## DONE
 - remove checking existence of ID in lex, that should be done in bison
 ### TODO
-- might simplify expressions like buzid's
-- tried debuging with gdb, seems like there is an error inside yyparse()
-- is the new complexity i added to main really necessary?
-- codel executes, but every program gets this error
-Error at line 1: syntax erro
+- FLOAT issues
+- not parsing line 1 issues
+
 
 - make start: declist endl BEGIN endl inst_list END // add endl
 - IDs are inserted in sym table in flex, in bison, when finding an ID in a cst dec , modify its Entry with new details

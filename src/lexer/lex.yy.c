@@ -503,7 +503,7 @@ char *yytext;
 #line 1 "src/lexer/codel-lex.l"
 #line 2 "src/lexer/codel-lex.l"
 #include "../../globals.h"
-int current_line = 0;
+int current_line = 1;
 extern YYSTYPE yylval;
 void yyerror(const char* msg) {
   fprintf(stderr, "Error at line %d: %s\n", current_line, msg);
