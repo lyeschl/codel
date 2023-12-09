@@ -1,6 +1,7 @@
 BOOL x ;
 INT a ;
-INT b,c,d ;
+INT b,c;
+CONST INT d:= 3;
 INT sum ;
 BEGIN
 y := True ;

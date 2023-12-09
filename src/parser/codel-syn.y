@@ -1,5 +1,4 @@
 %{
-
 #include "../../globals.h"
 // extern NODE *yyroot;
 #define EXIT_FAILURE 1
@@ -47,15 +46,21 @@ int     boolean;
 %start start
 %%
 
-start:        
-                        declaration_list kw_BEGIN instruction_list kw_END {printf("correct syntax \n"); YYACCEPT;}
-                        |
-                        declaration_list instruction_list kw_END {yyerror("Missing BEGIN");}
-                        |
-                        declaration_list kw_BEGIN instruction_list {yyerror("Missing END");}
-                        |
-                        declaration_list instruction_list {yyerror("Missing BEGIN and END");}
+start:                  prog_head prog_body;
+
+prog_head:        
+                        declaration_list 
 ;
+prog_body:              kw_BEGIN instruction_list kw_END  {printf("\ncompilation finished: symbol table is: \n"); YYACCEPT;}
+                        |
+                        instruction_list kw_END {yyerror("Missing BEGIN");}
+                        |
+                        kw_BEGIN instruction_list {yyerror("Missing END");}
+                        |
+                        instruction_list {yyerror("Missing BEGIN and END");}
+;
+
+
 declaration_list:       
                         declaration declaration_list  | ;
 
@@ -147,7 +152,9 @@ operand:
         const_value
         |
         ID {
-            identificateurNonDecl($1);
+            if(identificateurNonDecl($1)){
+                            insererType($1,"UNDECLARED");
+                        };
         }
         ;
 
@@ -158,8 +165,8 @@ instruction_list:
 
 instruction:
                          assign_ins SEMICOLON
-                        | assign_ins error { yyerror("Missing SEMICOLON after assign instruction");}
-                        | for_loop_ins 
+                        | assign_ins { yyerror("Missing SEMICOLON after assign instruction");}
+                        | for_loop_ins {printf("for loop instruction!");}
                         | if_ins
 ;
 bool_value:         
@@ -168,12 +175,17 @@ bool_value:
                     val_FALSE;
 
 assign_ins_bool:    ID ASSIGN_OP bool_value {
-    identificateurNonDecl($1);
+                        if(identificateurNonDecl($1)){
+                            insererType($1,"UNDECLARED");
+                        };
+
 } ;
 
 assign_ins:
                     ID ASSIGN_OP expression {
-                        identificateurNonDecl($1);
+                        if(identificateurNonDecl($1)){
+                            insererType($1,"UNDECLARED");
+                        };
                     }
                     |
                     assign_ins_bool;
@@ -184,7 +196,7 @@ for_loop_ins:
                    for_loop_head for_loop_body { printf("for loop here!");};
 
 for_loop_head:
-                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE 
+                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE  { printf("for loop here!");}
                 |
                 FOR PARENTH_OPEN for_loop_head_init for_loop_head_cond for_loop_head_incr PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
 
@@ -192,7 +204,9 @@ for_loop_head_init:
                  ID ASSIGN_OP operand;
 
 for_loop_head_cond:
-                 ID logical_operator operand | operand logical_operator ID;
+                 ID logical_operator operand 
+                 |
+                 operand logical_operator ID;
 
 for_loop_head_incr:
                  ID INC 
@@ -205,7 +219,7 @@ for_loop_body:
                   for_loop_instructions_none;
 for_loop_instructions:
                   instruction_list;
-for_loop_instructions_none: ;
+for_loop_instructions_none: SEMICOLON;
 
 
 expression_condition:
