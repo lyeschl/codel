@@ -1,0 +1,9 @@
+INT z;
+INT a,b,c;
+BEGIN
+a:=2;
+b:=1;
+if(a>b){
+    b++;
+}
+END

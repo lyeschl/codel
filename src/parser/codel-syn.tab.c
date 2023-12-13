@@ -1430,7 +1430,7 @@ yyreduce:
 #line 128 "src/parser/codel-syn.y"
                                     {
             if(!strcmp(save_op,"div_op") && (yyvsp[0].entier) == 0){
-                yyerror("Sematic error: division on 0");
+                printf("Sematic error: division on 0");
             }
         }
 #line 1437 "src/parser/codel-syn.tab.c"

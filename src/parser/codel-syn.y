@@ -127,7 +127,7 @@ const_value:
 expression:
         operand operator expression {
             if(!strcmp(save_op,"div_op") && $3 == 0){
-                yyerror("Sematic error: division on 0");
+                printf("Sematic error: division on 0");
             }
         }
         |
