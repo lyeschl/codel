@@ -1,0 +1,5 @@
+INT x;
+INT a,b;
+BEGIN
+a := b + 10 / 0 ;
+END

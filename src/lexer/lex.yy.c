@@ -364,12 +364,12 @@ struct yy_trans_info
 static const flex_int16_t yy_accept[77] =
     {   0,
         0,    0,   36,   34,   31,   32,   11,    4,    5,   14,
-       16,   12,   17,   15,   28,   34,   19,    8,   34,    9,
+       16,   12,   17,   15,   29,   34,   19,    8,   34,    9,
        30,   30,   30,   30,   30,   30,   30,   30,   30,   30,
-        6,    7,   13,   28,    0,   18,   10,   30,    0,   30,
-       30,   30,   30,   30,   30,   30,   30,   30,   30,   21,
-        0,   33,   29,   30,   30,   30,   30,   27,   30,   30,
-        1,   30,   30,   20,   30,    3,   30,   30,   30,   24,
+        6,    7,   13,   29,    0,   18,   10,   30,    0,   30,
+       30,   30,   30,   30,   30,   30,   30,   30,   30,   20,
+        0,   33,   28,   30,   30,   30,   30,   27,   30,   30,
+        1,   30,   30,   21,   30,    3,   30,   30,   30,   24,
        22,   26,   23,    2,   25,    0
     } ;
 
@@ -416,14 +416,14 @@ static const YY_CHAR yy_meta[45] =
 
 static const flex_int16_t yy_base[80] =
     {   0,
-        0,    0,  139,  140,  140,  140,  140,  140,  140,  140,
-       37,  140,  125,  140,   35,  120,  140,  140,  119,  140,
-      102,   24,   19,   22,   25,   27,   28,   29,   30,   37,
-       90,  140,  140,   53,  120,  140,  140,   99,    0,   46,
-       42,   45,   43,   47,   48,   50,   51,   54,   52,   98,
-       86,  140,  140,   96,   61,   63,   66,   95,   70,   57,
+        0,    0,  140,  141,  141,  141,  141,  141,  141,  141,
+       37,  141,  126,  141,   35,  121,  141,  141,  120,  141,
+      103,   24,   19,   22,   25,   27,   28,   29,   30,   37,
+       91,  141,  141,   53,  121,  141,  141,  100,    0,   46,
+       42,   45,   43,   47,   48,   50,   51,   54,   52,   99,
+       87,  141,  117,   96,   61,   63,   66,   95,   70,   57,
        94,   67,   71,   93,   72,   92,   75,   77,   78,   91,
-       90,   89,   88,   87,   86,  140,  112,  115,  110
+       90,   89,   88,   87,   86,  141,  112,  115,  110
     } ;
 
 static const flex_int16_t yy_def[80] =
@@ -438,7 +438,7 @@ static const flex_int16_t yy_def[80] =
        77,   77,   77,   77,   77,    0,   76,   76,   76
     } ;
 
-static const flex_int16_t yy_nxt[185] =
+static const flex_int16_t yy_nxt[186] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
         4,   14,   15,   16,   17,   18,   19,   20,   21,   22,
@@ -453,16 +453,16 @@ static const flex_int16_t yy_nxt[185] =
 
        72,   70,   39,   39,   39,   71,   73,   39,   74,   39,
        39,   54,   75,   38,   38,   51,   51,   51,   39,   39,
-       39,   39,   39,   39,   39,   39,   39,   39,   39,   52,
-       39,   39,   53,   52,   39,   37,   36,   34,   76,    3,
+       39,   39,   39,   39,   39,   39,   39,   39,   39,   53,
+       52,   39,   39,   53,   52,   39,   37,   36,   34,   76,
+        3,   76,   76,   76,   76,   76,   76,   76,   76,   76,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
-       76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
-       76,   76,   76,   76
+       76,   76,   76,   76,   76
     } ;
 
-static const flex_int16_t yy_chk[185] =
+static const flex_int16_t yy_chk[186] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -477,13 +477,13 @@ static const flex_int16_t yy_chk[185] =
 
        65,   62,   59,   63,   65,   63,   67,   67,   68,   68,
        69,   79,   69,   77,   77,   78,   78,   78,   75,   74,
-       73,   72,   71,   70,   66,   64,   61,   58,   54,   51,
-       50,   38,   35,   31,   21,   19,   16,   13,    3,   76,
+       73,   72,   71,   70,   66,   64,   61,   58,   54,   53,
+       51,   50,   38,   35,   31,   21,   19,   16,   13,    3,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
        76,   76,   76,   76,   76,   76,   76,   76,   76,   76,
-       76,   76,   76,   76
+       76,   76,   76,   76,   76
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -762,7 +762,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 140 );
+		while ( yy_base[yy_current_state] != 141 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -893,12 +893,12 @@ return SEMICOLON;
 case 20:
 YY_RULE_SETUP
 #line 46 "src/lexer/codel-lex.l"
-return FOR;
+return IF;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 47 "src/lexer/codel-lex.l"
-return IF;
+return FOR;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
@@ -934,21 +934,21 @@ case 28:
 YY_RULE_SETUP
 #line 55 "src/lexer/codel-lex.l"
 {
-  yylval.entier = atoi(yytext);
-  return INTEGER;
-}
-	YY_BREAK
-case 29:
-YY_RULE_SETUP
-#line 59 "src/lexer/codel-lex.l"
-{
   yylval.entier = atof(yytext);
   return REAL;
 }
 	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 60 "src/lexer/codel-lex.l"
+{
+  yylval.entier = atoi(yytext);
+  return INTEGER;
+}
+	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 64 "src/lexer/codel-lex.l"
+#line 66 "src/lexer/codel-lex.l"
 {
   if (yyleng > 10){
     printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, yylineno);
@@ -961,23 +961,24 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 73 "src/lexer/codel-lex.l"
+#line 75 "src/lexer/codel-lex.l"
 
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 74 "src/lexer/codel-lex.l"
+#line 76 "src/lexer/codel-lex.l"
 {++current_line;}
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 75 "src/lexer/codel-lex.l"
+#line 77 "src/lexer/codel-lex.l"
 {
  // printf("commentaire detecté au ligne %d\n", current_line);
     // BugFix: The loop below adds line count that is eaten within comment.
     // NB: Test other "multi-line-capable" blocks of code for the same bug...
+    printf("comment here!");
     for (int i = 0; i < strlen(yytext); i++)
         if (yytext[i] == '\n')
             ++current_line;
@@ -985,7 +986,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 83 "src/lexer/codel-lex.l"
+#line 86 "src/lexer/codel-lex.l"
 {
   printf("Lexical Error: Invalid character '%s' at line %d\n", yytext, current_line);
   exit(EXIT_FAILURE);
@@ -993,10 +994,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 87 "src/lexer/codel-lex.l"
+#line 90 "src/lexer/codel-lex.l"
 ECHO;
 	YY_BREAK
-#line 999 "src/lexer/lex.yy.c"
+#line 1000 "src/lexer/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2001,6 +2002,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 87 "src/lexer/codel-lex.l"
+#line 90 "src/lexer/codel-lex.l"
 
 

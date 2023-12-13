@@ -4,8 +4,9 @@
 #define EXIT_FAILURE 1
 
 void yyerror(const char *s);
-extern int current_line;
+
 char save_type[20];
+char save_op[10];
 
 %}
 %locations
@@ -23,7 +24,7 @@ int     boolean;
 %token <str>BOOL 
 %token <str>INT
 %token <str>FLOAT  
-%token PLUS MINUS MULT DIV INC
+%token PLUS MINUS MULT <str>DIV INC
 %token LESS GREATER EQUAL   
 %token NOT     
 %token PARENTH_OPEN PARENTH_CLOSE
@@ -42,6 +43,7 @@ int     boolean;
 %left EQUAL NOTEQUAL
 %left LESS GREATER LESSEQ GREATEQ
 
+%type <entier>expression
 
 %start start
 %%
@@ -58,6 +60,7 @@ prog_body:              kw_BEGIN instruction_list kw_END  {printf("\ncompilation
                         kw_BEGIN instruction_list {yyerror("Missing END");}
                         |
                         instruction_list {yyerror("Missing BEGIN and END");}
+                       
 ;
 
 
@@ -122,18 +125,22 @@ const_value:
              REAL;
 
 expression:
-        operand operator expression 
+        operand operator expression {
+            if(!strcmp(save_op,"div_op") && $3 == 0){
+                yyerror("Sematic error: division on 0");
+            }
+        }
         |
         operand
 ;
 operator: 
-        MULT
+        MULT { strcpy(save_op,"mult_op");}
         |
-        DIV
+        DIV { strcpy(save_op,"div_op");}
         |
-        PLUS
+        PLUS { strcpy(save_op,"add_op");}
         |
-        MINUS
+        MINUS { strcpy(save_op,"sub_op");}
 ;
 logical_operator:
         EQUAL
@@ -167,7 +174,7 @@ instruction:
                          assign_ins SEMICOLON
                         | assign_ins { yyerror("Missing SEMICOLON after assign instruction");}
                         | for_loop_ins {printf("for loop instruction!");}
-                        | if_ins
+                        | if_ins  {printf("if ins incoming!");}
 ;
 bool_value:         
                     val_TRUE 
@@ -190,10 +197,10 @@ assign_ins:
                     |
                     assign_ins_bool;
                     |
-                     ID INC ;
+                     ID INC { printf($1); };
 
 for_loop_ins:
-                   for_loop_head for_loop_body { printf("for loop here!");};
+                   for_loop_head for_loop_body;
 
 for_loop_head:
                 FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE  { printf("for loop here!");}
@@ -214,29 +221,26 @@ for_loop_head_incr:
                  INC ID;
 
 for_loop_body:
-                  BRACKET_OPEN for_loop_instructions BRACKET_CLOSE
+                  BRACKET_OPEN instruction_list BRACKET_CLOSE
                   |
                   for_loop_instructions_none;
-for_loop_instructions:
-                  instruction_list;
+
 for_loop_instructions_none: SEMICOLON;
 
 
 expression_condition:
-                   operand logical_operator operand ;
+                   operand logical_operator operand  {printf("exp condition here!");};
 
 condition:
-                    PARENTH_OPEN expression_condition PARENTH_CLOSE 
+                    expression_condition {printf("condition here!");}
                     |
                     NOT condition 
                     ;
 
 if_ins:
-                     IF condition BRACKET_OPEN body BRACKET_CLOSE else_part;
-body:
-                     instruction_list;
-else_part:          |
-                     ELSE BRACKET_OPEN body BRACKET_CLOSE;
+                    IF PARENTH_OPEN condition PARENTH_CLOSE BRACKET_OPEN instruction_list BRACKET_CLOSE else_part {printf("if here!");};
+else_part:          
+                     ELSE BRACKET_OPEN instruction_list BRACKET_CLOSE | ;
 
 
 %%

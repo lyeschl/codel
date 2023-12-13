@@ -2,8 +2,10 @@
 ## DONE
 - remove checking existence of ID in lex, that should be done in bison
 ### TODO
-- FLOAT issues
+- nested for loop issue, brackets get confused with comments
+- if is not working
 - not parsing line 1 issues
+- see
 
 
 - make start: declist endl BEGIN endl inst_list END // add endl

@@ -1,0 +1,8 @@
+INT a;
+INT x,y;
+CONST FLOAT z := 10;
+BEGIN
+{ commentaire }
+x := ( y + 10 ) * 2;
+END   
+{ commentaire }

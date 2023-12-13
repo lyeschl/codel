@@ -2,6 +2,8 @@ identifier_list: ID {
     $$ = malloc(sizeof(char*));
     $$[0] = strdup($1);
 }
+for_loop_instructions:
+                  instruction_list;
 | identifier_list COLON ID {
     int size = arr_size((char**)$1);
     char** tmp = realloc($1, (size + 1) * sizeof(char*));

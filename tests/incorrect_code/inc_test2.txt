@@ -1,5 +1,5 @@
 INT x;
 
 BEGIN
-    x := "hello"; 
+    x := 4;
 END

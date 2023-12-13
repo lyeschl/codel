@@ -9,7 +9,7 @@ void yyerror(const char* msg) {
 %}
 
 INTEGER            [-+]?([0-9])+
-REAL               [-+]?[0-9]+"."[0-9]
+REAL               [-+]?[0-9]+"."[0-9]+
 ID                 [a-zA-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
 comment            \{[^}]*\}
 %%
@@ -43,8 +43,8 @@ comment            \{[^}]*\}
 "-" return MINUS;
 ":=" return ASSIGN_OP;
 ";" return SEMICOLON; 
-"for" return FOR;
 "if" return IF;
+"for" return FOR;
 "else" return ELSE;
 "CONST" return CONST;
 "True" return val_TRUE;
@@ -52,14 +52,16 @@ comment            \{[^}]*\}
 "BEGIN"   return kw_BEGIN;
 "END"     return kw_END;
 
-{INTEGER} {
-  yylval.entier = atoi(yytext);
-  return INTEGER;
-}
 {REAL} {
   yylval.entier = atof(yytext);
   return REAL;
 }
+
+{INTEGER} {
+  yylval.entier = atoi(yytext);
+  return INTEGER;
+}
+
 
 {ID} {
   if (yyleng > 10){
@@ -76,6 +78,7 @@ comment            \{[^}]*\}
  // printf("commentaire detecté au ligne %d\n", current_line);
     // BugFix: The loop below adds line count that is eaten within comment.
     // NB: Test other "multi-line-capable" blocks of code for the same bug...
+    printf("comment here!");
     for (int i = 0; i < strlen(yytext); i++)
         if (yytext[i] == '\n')
             ++current_line;

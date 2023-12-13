@@ -1,0 +1,14 @@
+INT x;
+INT a,b;
+BEGIN
+
+for(i:=0,i<10,i++){
+a++;
+b++;
+
+for(i:=0,i<10,i++){
+a++;
+b++;
+}
+}
+END
