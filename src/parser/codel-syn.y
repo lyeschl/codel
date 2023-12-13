@@ -1,6 +1,5 @@
 %{
 #include "../../globals.h"
-// extern NODE *yyroot;
 #define EXIT_FAILURE 1
 
 void yyerror(const char *s);
@@ -21,10 +20,10 @@ int     boolean;
 %token kw_BEGIN kw_END 
 %token CONST
 %token val_TRUE val_FALSE
-%token <str>BOOL 
+%token <str>BOOL
 %token <str>INT
 %token <str>FLOAT  
-%token PLUS MINUS MULT <str>DIV INC
+%token <str>PLUS <str>MINUS <str>MULT <str>DIV <str>INC
 %token LESS GREATER EQUAL   
 %token NOT     
 %token PARENTH_OPEN PARENTH_CLOSE
@@ -33,7 +32,7 @@ int     boolean;
 %token <entier>INTEGER 
 %token <real>REAL   
 %token <str>ID
-%token COMMA COLON SEMICOLON
+%token COMMA SEMICOLON
 %token FOR
 %token IF ELSE
 
@@ -111,6 +110,7 @@ const_type:
 constant_declaration:
                          CONST const_type ID ASSIGN_OP const_value {
     // Add the ID to the symbol table with type and isConstant set to True
+        doubleDeclaration($3);
        if (!doubleDeclaration($3))
         {
             insererType($3, save_type);
@@ -127,7 +127,7 @@ const_value:
 expression:
         operand operator expression {
             if(!strcmp(save_op,"div_op") && $3 == 0){
-                printf("Sematic error: division on 0");
+                printf("Semantic error: division on 0");
             }
         }
         |
@@ -159,6 +159,7 @@ operand:
         const_value
         |
         ID {
+            identificateurNonDecl($1);
             if(identificateurNonDecl($1)){
                             insererType($1,"UNDECLARED");
                         };
@@ -182,6 +183,7 @@ bool_value:
                     val_FALSE;
 
 assign_ins_bool:    ID ASSIGN_OP bool_value {
+                        identificateurNonDecl($1);
                         if(identificateurNonDecl($1)){
                             insererType($1,"UNDECLARED");
                         };
@@ -190,6 +192,7 @@ assign_ins_bool:    ID ASSIGN_OP bool_value {
 
 assign_ins:
                     ID ASSIGN_OP expression {
+                        identificateurNonDecl($1);
                         if(identificateurNonDecl($1)){
                             insererType($1,"UNDECLARED");
                         };
@@ -210,7 +213,9 @@ for_loop_head:
 for_loop_head_init:
                  ID ASSIGN_OP operand{
                         identificateurNonDecl($1);
-                        insererType($1,"UNDECLARED");
+                        if(identificateurNonDecl($1)){
+                            insererType($1,"UNDECLARED");
+                        };
                         
 
                  };

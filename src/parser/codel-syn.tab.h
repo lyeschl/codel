@@ -80,14 +80,13 @@ extern int yydebug;
     REAL = 281,                    /* REAL  */
     ID = 282,                      /* ID  */
     COMMA = 283,                   /* COMMA  */
-    COLON = 284,                   /* COLON  */
-    SEMICOLON = 285,               /* SEMICOLON  */
-    FOR = 286,                     /* FOR  */
-    IF = 287,                      /* IF  */
-    ELSE = 288,                    /* ELSE  */
-    NOTEQUAL = 289,                /* NOTEQUAL  */
-    LESSEQ = 290,                  /* LESSEQ  */
-    GREATEQ = 291                  /* GREATEQ  */
+    SEMICOLON = 284,               /* SEMICOLON  */
+    FOR = 285,                     /* FOR  */
+    IF = 286,                      /* IF  */
+    ELSE = 287,                    /* ELSE  */
+    NOTEQUAL = 288,                /* NOTEQUAL  */
+    LESSEQ = 289,                  /* LESSEQ  */
+    GREATEQ = 290                  /* GREATEQ  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -96,14 +95,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "src/parser/codel-syn.y"
+#line 13 "src/parser/codel-syn.y"
 
 int     entier;
 char*   str;
 double  real;
 int     boolean;
 
-#line 107 "src/parser/codel-syn.tab.h"
+#line 106 "src/parser/codel-syn.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
