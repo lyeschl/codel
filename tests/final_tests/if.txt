@@ -1,9 +1,9 @@
-INT z;
-INT a,b,c;
+INT Z;
+INT A,B,C;
 BEGIN
-a:=2;
-b:=1;
-if(a>b){
-    b++;
+A:=2;
+B:=1;
+if(A>B){
+    B++;
 }
 END

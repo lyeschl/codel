@@ -1,15 +1,15 @@
-BOOL x ;
-INT a ;
-INT a ;
-INT b,c;
-CONST INT d:= 3;
-INT sum ;
+BOOL X ;
+INT A ;
+INT A ;
+INT B,C,I;
+CONST INT D:= 3;
+INT Sum ;
 BEGIN
-{ this is a comment }
-for(i:=0,i<10,i++){ a++; b++; }
-y := True ;
-a := 1;
-b := 2;
-sum := a + b ;
-sum++;
+/* this is a comment */
+for(I:=0,I<10,I++){ A++; B++; }
+Y := True ;
+A := 1;
+B := 2;
+Sum := A + B ;
+Sum++;
 END

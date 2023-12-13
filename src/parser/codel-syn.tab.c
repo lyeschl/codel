@@ -574,8 +574,8 @@ static const yytype_uint8 yyrline[] =
       96,   107,   109,   112,   120,   123,   125,   128,   134,   137,
      139,   141,   143,   146,   148,   150,   152,   154,   156,   159,
      161,   170,   170,   174,   175,   176,   177,   180,   182,   184,
-     192,   198,   200,   203,   206,   208,   211,   214,   216,   219,
-     221,   224,   226,   228,   232,   235,   237,   241,   243,   243
+     192,   198,   200,   203,   206,   208,   211,   219,   221,   224,
+     226,   229,   231,   233,   237,   240,   242,   246,   248,   248
 };
 #endif
 
@@ -1527,26 +1527,37 @@ yyreduce:
 #line 1528 "src/parser/codel-syn.tab.c"
     break;
 
+  case 56: /* for_loop_head_init: ID ASSIGN_OP operand  */
+#line 211 "src/parser/codel-syn.y"
+                                     {
+                        identificateurNonDecl((yyvsp[-2].str));
+                        insererType((yyvsp[-2].str),"UNDECLARED");
+                        
+
+                 }
+#line 1539 "src/parser/codel-syn.tab.c"
+    break;
+
   case 64: /* expression_condition: operand logical_operator operand  */
-#line 232 "src/parser/codel-syn.y"
+#line 237 "src/parser/codel-syn.y"
                                                      {printf("exp condition here!");}
-#line 1534 "src/parser/codel-syn.tab.c"
+#line 1545 "src/parser/codel-syn.tab.c"
     break;
 
   case 65: /* condition: expression_condition  */
-#line 235 "src/parser/codel-syn.y"
+#line 240 "src/parser/codel-syn.y"
                                          {printf("condition here!");}
-#line 1540 "src/parser/codel-syn.tab.c"
+#line 1551 "src/parser/codel-syn.tab.c"
     break;
 
   case 67: /* if_ins: IF PARENTH_OPEN condition PARENTH_CLOSE BRACKET_OPEN instruction_list BRACKET_CLOSE else_part  */
-#line 241 "src/parser/codel-syn.y"
+#line 246 "src/parser/codel-syn.y"
                                                                                                                   {printf("if here!");}
-#line 1546 "src/parser/codel-syn.tab.c"
+#line 1557 "src/parser/codel-syn.tab.c"
     break;
 
 
-#line 1550 "src/parser/codel-syn.tab.c"
+#line 1561 "src/parser/codel-syn.tab.c"
 
       default: break;
     }
@@ -1744,5 +1755,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 246 "src/parser/codel-syn.y"
+#line 252 "src/parser/codel-syn.y"
 

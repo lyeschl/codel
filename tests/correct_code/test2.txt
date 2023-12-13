@@ -1,6 +1,6 @@
-INT x ;
-FLOAT a, b;
+INT X ;
+FLOAT A, B;
 BEGIN
-    a := 3.14 ;
-    b := a + 2.0;
+    A := 3.14 ;
+    B := A + 2.0;
 END

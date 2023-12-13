@@ -2,6 +2,7 @@
 ## DONE
 - remove checking existence of ID in lex, that should be done in bison
 ### TODO
+- line 1 declarations are not parsed , comments work tho
 - nested for loop issue, brackets get confused with comments
 - if is not working
 - not parsing line 1 issues

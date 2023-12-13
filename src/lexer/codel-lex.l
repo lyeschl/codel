@@ -10,8 +10,8 @@ void yyerror(const char* msg) {
 
 INTEGER            [-+]?([0-9])+
 REAL               [-+]?[0-9]+"."[0-9]+
-ID                 [a-zA-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
-comment            \{[^}]*\}
+ID                 [A-Z]([a-zA-Z]|[0-9]|([_]([a-zA-Z]|[0-9])))*
+COMMENT            "/*"[^}]*"*/"
 %%
 "INT"    {
     yylval.str = strdup(yytext);
@@ -53,7 +53,7 @@ comment            \{[^}]*\}
 "END"     return kw_END;
 
 {REAL} {
-  yylval.entier = atof(yytext);
+  yylval.real = atof(yytext);
   return REAL;
 }
 
@@ -65,7 +65,7 @@ comment            \{[^}]*\}
 
 {ID} {
   if (yyleng > 10){
-    printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, yylineno);
+    printf("Error: Identifier '%s' at line %d exceeds 10 characters\n", yytext, current_line);
     exit(EXIT_FAILURE);
   }
   yylval.str = strdup(yytext);
@@ -74,7 +74,7 @@ comment            \{[^}]*\}
 }
 [ \t]
 \n {++current_line;}
-{comment} {
+{COMMENT} {
  // printf("commentaire detecté au ligne %d\n", current_line);
     // BugFix: The loop below adds line count that is eaten within comment.
     // NB: Test other "multi-line-capable" blocks of code for the same bug...

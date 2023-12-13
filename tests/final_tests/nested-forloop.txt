@@ -1,14 +1,13 @@
-INT x;
-INT a,b;
+INT X;
+INT A,B;
 BEGIN
+for(I:=0,I<10,I++){
+A++;
+B++;
 
-for(i:=0,i<10,i++){
-a++;
-b++;
-
-for(i:=0,i<10,i++){
-a++;
-b++;
+for(I:=0,I<10,I++){
+A++;
+B++;
 }
 }
 END

@@ -1,3 +1,4 @@
+{this is a comment}
 INT x;
 INT a,b;
 BEGIN

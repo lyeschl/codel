@@ -173,8 +173,8 @@ instruction_list:
 instruction:
                          assign_ins SEMICOLON
                         | assign_ins { yyerror("Missing SEMICOLON after assign instruction");}
-                        | for_loop_ins {printf("for loop instruction!");}
-                        | if_ins  {printf("if ins incoming!");}
+                        | for_loop_ins 
+                        | if_ins
 ;
 bool_value:         
                     val_TRUE 
@@ -203,12 +203,17 @@ for_loop_ins:
                    for_loop_head for_loop_body;
 
 for_loop_head:
-                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE  { printf("for loop here!");}
+                FOR PARENTH_OPEN for_loop_head_init COMMA for_loop_head_cond COMMA for_loop_head_incr PARENTH_CLOSE
                 |
                 FOR PARENTH_OPEN for_loop_head_init for_loop_head_cond for_loop_head_incr PARENTH_CLOSE { yyerror("Missing COMMAS in forloop head"); };
 
 for_loop_head_init:
-                 ID ASSIGN_OP operand;
+                 ID ASSIGN_OP operand{
+                        identificateurNonDecl($1);
+                        insererType($1,"UNDECLARED");
+                        
+
+                 };
 
 for_loop_head_cond:
                  ID logical_operator operand 
@@ -229,18 +234,19 @@ for_loop_instructions_none: SEMICOLON;
 
 
 expression_condition:
-                   operand logical_operator operand  {printf("exp condition here!");};
+                   operand logical_operator operand  ;
 
 condition:
-                    expression_condition {printf("condition here!");}
+                    expression_condition 
                     |
                     NOT condition 
                     ;
 
 if_ins:
-                    IF PARENTH_OPEN condition PARENTH_CLOSE BRACKET_OPEN instruction_list BRACKET_CLOSE else_part {printf("if here!");};
+                    IF PARENTH_OPEN condition PARENTH_CLOSE BRACKET_OPEN instruction_list BRACKET_CLOSE else_part;
 else_part:          
                      ELSE BRACKET_OPEN instruction_list BRACKET_CLOSE | ;
+
 
 
 %%
