@@ -94,3 +94,24 @@ int identificateurNonDecl(char entite[])
     }
     return 0;
 }
+
+const char* isFloat(double num) {
+    double integralPart;
+    // Attempt to extract the integral part
+    if (modf(num, &integralPart) == 0.0) {
+        // If the fractional part is 0, it's an integer
+        return "INT"; // false
+    } else {
+        // If there is a fractional part, it's a float
+        return "FLOAT"; // true
+    }
+}
+// Function to get the type of an entity given its name
+const char* getTypeByName(const char* entityName) {
+    for (int i = 0; i < symtab_index; i++) {
+        if (strcmp(symtab[i].NomEntite, entityName) == 0) {
+            return symtab[i].TypeEntite;
+        }
+    }
+    return "Unknown"; // Return "Unknown" if entity name is not found
+}

@@ -512,9 +512,9 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  33
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  69
+#define YYNRULES  70
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  114
+#define YYNSTATES  115
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   290
@@ -565,15 +565,16 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
        0,    50,    50,    53,    55,    57,    59,    61,    67,    67,
       70,    72,    74,    76,    80,    82,    84,    87,    90,    92,
-      95,   106,   108,   111,   120,   123,   125,   128,   134,   137,
-     139,   141,   143,   146,   148,   150,   152,   154,   156,   159,
-     161,   171,   171,   175,   176,   177,   178,   181,   183,   185,
-     194,   201,   203,   206,   209,   211,   214,   224,   226,   229,
-     231,   234,   236,   238,   242,   245,   247,   251,   253,   253
+      95,   106,   108,   111,   123,   135,   138,   140,   143,   149,
+     152,   154,   156,   158,   161,   163,   165,   167,   169,   171,
+     174,   176,   186,   186,   190,   191,   192,   193,   196,   198,
+     200,   209,   219,   221,   224,   227,   229,   232,   242,   244,
+     247,   249,   252,   254,   256,   260,   263,   265,   269,   271,
+     271
 };
 #endif
 
@@ -612,7 +613,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-68)
+#define YYPACT_NINF (-69)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -626,18 +627,18 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      31,    10,   -68,   -68,   -68,     8,    -1,   -68,    31,     1,
-       5,     9,   -68,   -68,    38,   -68,    -6,   -10,    44,    46,
-     -68,    63,    -6,   -68,    40,   -68,   -18,   -68,   -68,   -68,
-     -68,    42,   -68,   -68,    47,    64,   -68,     6,    45,    -9,
-     -68,   -68,   -68,    -6,   -68,   -68,   -68,     1,    37,   -68,
-     -68,   -68,   -68,   -68,   -68,   -68,   -68,    35,   -68,    49,
-      26,    -9,    39,   -68,    53,    52,   -68,   -68,   -68,   -68,
-     -68,   -68,    17,    17,    39,    34,    39,   -12,   -68,    58,
-      59,   -68,    60,    17,    57,   -68,   -68,   -68,    17,    55,
-      54,    61,    65,    66,   -68,   -68,   -68,   -68,    -6,   -68,
-     -12,   -68,   -68,   -68,   -68,    62,    68,    67,   -68,    69,
-     -68,    -6,    70,   -68
+      32,    10,   -69,   -69,   -69,     8,    -1,   -69,    32,     1,
+      34,    37,   -69,   -69,    12,   -69,    -6,   -10,    44,    45,
+     -69,    63,    -6,   -69,    39,   -69,   -18,   -69,   -69,   -69,
+     -69,    41,   -69,   -69,    46,    67,   -69,     6,    47,    -9,
+     -69,   -69,   -69,    -6,   -69,   -69,   -69,     1,     9,   -69,
+     -69,   -69,   -69,   -69,   -69,   -69,   -69,    36,   -69,    48,
+      27,    -9,    40,   -69,    52,    53,   -69,   -69,   -69,   -69,
+     -69,   -69,   -69,    18,    18,    40,    35,    40,   -12,   -69,
+      57,    59,   -69,    60,    18,    58,   -69,   -69,   -69,    18,
+      51,    54,    55,    69,    64,   -69,   -69,   -69,   -69,    -6,
+     -69,   -12,   -69,   -69,   -69,   -69,    65,    66,    61,   -69,
+      68,   -69,    -6,    71,   -69
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -645,36 +646,36 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       9,     0,    16,    14,    15,     0,    42,     3,     9,     0,
-      12,    13,    21,    22,     0,     1,    42,     0,     0,     0,
-       2,     7,    42,    51,    44,    45,     0,    46,     8,    20,
-      17,    19,    10,    11,    24,     6,    52,     0,     0,     0,
-       5,    41,    43,    42,    63,    53,    62,     0,     0,     4,
-      47,    48,    25,    26,    40,    39,    50,    28,    49,     0,
-       0,     0,     0,    65,     0,     0,    18,    23,    31,    32,
-      29,    30,     0,     0,     0,     0,     0,     0,    66,    34,
-      35,    33,     0,     0,     0,    61,    27,    56,     0,     0,
-       0,     0,     0,     0,    36,    37,    38,    64,    42,    57,
-       0,    58,    60,    59,    55,     0,     0,    69,    54,     0,
-      67,    42,     0,    68
+       9,     0,    16,    14,    15,     0,    43,     3,     9,     0,
+      12,    13,    21,    22,     0,     1,    43,     0,     0,     0,
+       2,     7,    43,    52,    45,    46,     0,    47,     8,    20,
+      17,    19,    10,    11,    25,     6,    53,     0,     0,     0,
+       5,    42,    44,    43,    64,    54,    63,     0,     0,     4,
+      48,    49,    26,    27,    41,    40,    51,    29,    50,     0,
+       0,     0,     0,    66,     0,     0,    18,    23,    24,    32,
+      33,    30,    31,     0,     0,     0,     0,     0,     0,    67,
+      35,    36,    34,     0,     0,     0,    62,    28,    57,     0,
+       0,     0,     0,     0,     0,    37,    38,    39,    65,    43,
+      58,     0,    59,    61,    60,    56,     0,     0,    70,    55,
+       0,    68,    43,     0,    69
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -68,   -68,   -68,   -68,    76,   -68,   -68,   -68,    43,   -68,
-     -68,   -68,    48,    14,   -68,   -67,   -38,   -16,   -68,   -68,
-     -68,   -68,   -68,   -68,   -68,    19,    -8,   -68,   -68,   -68,
-      36,   -68,   -68
+     -69,   -69,   -69,   -69,    78,   -69,   -69,   -69,    42,   -69,
+     -69,   -69,   -69,    19,   -69,   -68,   -38,   -16,   -69,   -69,
+     -69,   -69,   -69,   -69,   -69,    15,    -4,   -69,   -69,   -69,
+      38,   -69,   -69
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
        0,     5,     6,    20,     7,     8,     9,    10,    30,    31,
-      14,    11,    55,    56,    72,    83,    57,    21,    22,    58,
-      23,    24,    25,    26,    60,    77,    93,    45,    46,    63,
-      64,    27,   110
+      14,    11,    55,    56,    73,    84,    57,    21,    22,    58,
+      23,    24,    25,    26,    60,    78,    94,    45,    46,    63,
+      64,    27,   111
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -682,30 +683,30 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      35,    62,    16,    91,    43,    36,    41,    88,    15,    90,
-      61,    44,    50,    51,    37,    92,    52,    53,    54,    12,
-      13,    17,    76,    62,    18,    19,    17,    65,    29,    18,
-      19,    52,    53,    54,    32,    87,     1,    76,    33,     2,
-       3,     4,    52,    53,    54,    97,    68,    69,    70,    71,
-      99,    52,    53,    74,    75,    79,    80,    81,    82,    52,
-      53,    74,    52,    53,    38,    34,    39,    40,    49,    42,
-      47,    48,    59,    73,    84,    85,    94,    95,    96,    98,
-     103,   101,   105,   100,    28,   107,    86,   104,   102,   108,
-      66,   111,   106,   113,    89,   112,    67,    78,     0,   109
+      35,    62,    16,    92,    43,    36,    41,    89,    15,    91,
+      61,    44,    50,    51,    37,    93,    52,    53,    54,    12,
+      13,    17,    77,    62,    18,    19,    17,    65,    29,    18,
+      19,    52,    53,    54,    67,    68,    88,     1,    77,    34,
+       2,     3,     4,    52,    53,    54,    98,    69,    70,    71,
+      72,   100,    52,    53,    75,    76,    80,    81,    82,    83,
+      52,    53,    75,    32,    38,    39,    33,    40,    42,    47,
+      48,    49,    74,    85,    59,    95,    86,    96,    97,   101,
+      99,   102,   103,   106,   104,   105,    28,   109,   108,    66,
+     112,    90,    87,   110,   114,     0,   113,   107,     0,    79
 };
 
 static const yytype_int8 yycheck[] =
 {
-      16,    39,     3,    15,    22,    15,    22,    74,     0,    76,
+      16,    39,     3,    15,    22,    15,    22,    75,     0,    77,
       19,    29,     6,     7,    24,    27,    25,    26,    27,     9,
       10,    27,    60,    61,    30,    31,    27,    43,    27,    30,
-      31,    25,    26,    27,    29,    73,     5,    75,    29,     8,
-       9,    10,    25,    26,    27,    83,    11,    12,    13,    14,
-      88,    25,    26,    27,    28,    16,    17,    18,    19,    25,
-      26,    27,    25,    26,    20,    27,    20,     4,     4,    29,
-      28,    24,    27,    24,    21,    23,    18,    18,    18,    22,
-      15,    27,    98,    28,     8,    23,    72,    21,    27,    21,
-      47,    22,   100,    23,    75,   111,    48,    61,    -1,    32
+      31,    25,    26,    27,    25,    26,    74,     5,    76,    27,
+       8,     9,    10,    25,    26,    27,    84,    11,    12,    13,
+      14,    89,    25,    26,    27,    28,    16,    17,    18,    19,
+      25,    26,    27,    29,    20,    20,    29,     4,    29,    28,
+      24,     4,    24,    21,    27,    18,    23,    18,    18,    28,
+      22,    27,    27,    99,    15,    21,     8,    21,    23,    47,
+      22,    76,    73,    32,    23,    -1,   112,   101,    -1,    61
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -718,12 +719,12 @@ static const yytype_int8 yystos[] =
       44,    45,    29,    29,    27,    53,    15,    24,    20,    20,
        4,    53,    29,    22,    29,    63,    64,    28,    24,     4,
        6,     7,    25,    26,    27,    48,    49,    52,    55,    27,
-      60,    19,    52,    65,    66,    53,    44,    48,    11,    12,
-      13,    14,    50,    24,    27,    28,    52,    61,    66,    16,
-      17,    18,    19,    51,    21,    23,    49,    52,    51,    61,
-      51,    15,    27,    62,    18,    18,    18,    52,    22,    52,
-      28,    27,    27,    15,    21,    53,    62,    23,    21,    32,
-      68,    22,    53,    23
+      60,    19,    52,    65,    66,    53,    44,    25,    26,    11,
+      12,    13,    14,    50,    24,    27,    28,    52,    61,    66,
+      16,    17,    18,    19,    51,    21,    23,    49,    52,    51,
+      61,    51,    15,    27,    62,    18,    18,    18,    52,    22,
+      52,    28,    27,    27,    15,    21,    53,    62,    23,    21,
+      32,    68,    22,    53,    23
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -731,11 +732,12 @@ static const yytype_int8 yyr1[] =
 {
        0,    36,    37,    38,    39,    39,    39,    39,    40,    40,
       41,    41,    41,    41,    42,    42,    42,    43,    44,    44,
-      45,    46,    46,    47,    47,    48,    48,    49,    49,    50,
-      50,    50,    50,    51,    51,    51,    51,    51,    51,    52,
-      52,    53,    53,    54,    54,    54,    54,    55,    55,    56,
-      57,    57,    57,    58,    59,    59,    60,    61,    61,    62,
-      62,    63,    63,    64,    65,    66,    66,    67,    68,    68
+      45,    46,    46,    47,    47,    47,    48,    48,    49,    49,
+      50,    50,    50,    50,    51,    51,    51,    51,    51,    51,
+      52,    52,    53,    53,    54,    54,    54,    54,    55,    55,
+      56,    57,    57,    57,    58,    59,    59,    60,    61,    61,
+      62,    62,    63,    63,    64,    65,    66,    66,    67,    68,
+      68
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -743,11 +745,12 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     2,     1,     3,     2,     2,     1,     2,     0,
        2,     2,     1,     1,     1,     1,     1,     2,     3,     1,
-       1,     1,     1,     5,     3,     1,     1,     3,     1,     1,
-       1,     1,     1,     1,     1,     1,     2,     2,     2,     1,
-       1,     2,     0,     2,     1,     1,     1,     1,     1,     3,
-       3,     1,     2,     2,     8,     6,     3,     3,     3,     2,
-       2,     3,     1,     1,     3,     1,     2,     8,     4,     0
+       1,     1,     1,     5,     5,     3,     1,     1,     3,     1,
+       1,     1,     1,     1,     1,     1,     1,     2,     2,     2,
+       1,     1,     2,     0,     2,     1,     1,     1,     1,     1,
+       3,     3,     1,     2,     2,     8,     6,     3,     3,     3,
+       2,     2,     3,     1,     1,     3,     1,     2,     8,     4,
+       0
 };
 
 
@@ -1326,55 +1329,55 @@ yyreduce:
   case 4: /* prog_body: kw_BEGIN instruction_list kw_END  */
 #line 55 "src/parser/codel-syn.y"
                                                           {printf("\ncompilation finished: symbol table is: \n"); YYACCEPT;}
-#line 1330 "src/parser/codel-syn.tab.c"
+#line 1333 "src/parser/codel-syn.tab.c"
     break;
 
   case 5: /* prog_body: instruction_list kw_END  */
 #line 57 "src/parser/codel-syn.y"
                                                 {yyerror("Missing BEGIN");}
-#line 1336 "src/parser/codel-syn.tab.c"
+#line 1339 "src/parser/codel-syn.tab.c"
     break;
 
   case 6: /* prog_body: kw_BEGIN instruction_list  */
 #line 59 "src/parser/codel-syn.y"
                                                   {yyerror("Missing END");}
-#line 1342 "src/parser/codel-syn.tab.c"
+#line 1345 "src/parser/codel-syn.tab.c"
     break;
 
   case 7: /* prog_body: instruction_list  */
 #line 61 "src/parser/codel-syn.y"
                                          {yyerror("Missing BEGIN and END");}
-#line 1348 "src/parser/codel-syn.tab.c"
+#line 1351 "src/parser/codel-syn.tab.c"
     break;
 
   case 12: /* declaration: variable_declaration  */
 #line 74 "src/parser/codel-syn.y"
                                              { yyerror("Missing SEMICOLON after variable declaration");}
-#line 1354 "src/parser/codel-syn.tab.c"
+#line 1357 "src/parser/codel-syn.tab.c"
     break;
 
   case 13: /* declaration: constant_declaration  */
 #line 76 "src/parser/codel-syn.y"
                                              { yyerror("Missing SEMICOLON after constant declaration");}
-#line 1360 "src/parser/codel-syn.tab.c"
+#line 1363 "src/parser/codel-syn.tab.c"
     break;
 
   case 14: /* type_specifier: INT  */
 #line 80 "src/parser/codel-syn.y"
                         {strcpy(save_type,(yyvsp[0].str));}
-#line 1366 "src/parser/codel-syn.tab.c"
+#line 1369 "src/parser/codel-syn.tab.c"
     break;
 
   case 15: /* type_specifier: FLOAT  */
 #line 82 "src/parser/codel-syn.y"
                           {strcpy(save_type,(yyvsp[0].str));}
-#line 1372 "src/parser/codel-syn.tab.c"
+#line 1375 "src/parser/codel-syn.tab.c"
     break;
 
   case 16: /* type_specifier: BOOL  */
 #line 84 "src/parser/codel-syn.y"
                          {strcpy(save_type,(yyvsp[0].str));}
-#line 1378 "src/parser/codel-syn.tab.c"
+#line 1381 "src/parser/codel-syn.tab.c"
     break;
 
   case 20: /* var_dec_id: ID  */
@@ -1387,25 +1390,28 @@ yyreduce:
             insererConst((yyvsp[0].str),0);
         }
     }
-#line 1391 "src/parser/codel-syn.tab.c"
+#line 1394 "src/parser/codel-syn.tab.c"
     break;
 
   case 21: /* const_type: INT  */
 #line 106 "src/parser/codel-syn.y"
                 {strcpy(save_type,(yyvsp[0].str));}
-#line 1397 "src/parser/codel-syn.tab.c"
+#line 1400 "src/parser/codel-syn.tab.c"
     break;
 
   case 22: /* const_type: FLOAT  */
 #line 108 "src/parser/codel-syn.y"
                   {strcpy(save_type,(yyvsp[0].str));}
-#line 1403 "src/parser/codel-syn.tab.c"
+#line 1406 "src/parser/codel-syn.tab.c"
     break;
 
-  case 23: /* constant_declaration: CONST const_type ID ASSIGN_OP const_value  */
+  case 23: /* constant_declaration: CONST const_type ID ASSIGN_OP INTEGER  */
 #line 111 "src/parser/codel-syn.y"
-                                                                   {
+                                                               {
     // Add the ID to the symbol table with type and isConstant set to True
+        if(0!=strcmp(save_type,isFloat((yyvsp[0].real)))){
+            printf("\nType mismatch: %s is a %s and %f is a %s",(yyvsp[-2].str),save_type,(yyvsp[0].real),isFloat((yyvsp[0].real)));
+        }
         doubleDeclaration((yyvsp[-2].str));
        if (!doubleDeclaration((yyvsp[-2].str)))
         {
@@ -1413,68 +1419,85 @@ yyreduce:
             insererConst((yyvsp[-2].str),1);
         }
 }
-#line 1417 "src/parser/codel-syn.tab.c"
-    break;
-
-  case 24: /* constant_declaration: CONST const_type ID  */
-#line 120 "src/parser/codel-syn.y"
-                                             { yyerror("Malformed constant declaration"); }
 #line 1423 "src/parser/codel-syn.tab.c"
     break;
 
-  case 27: /* expression: operand operator expression  */
-#line 128 "src/parser/codel-syn.y"
+  case 24: /* constant_declaration: CONST const_type ID ASSIGN_OP REAL  */
+#line 123 "src/parser/codel-syn.y"
+                                     {
+    // Add the ID to the symbol table with type and isConstant set to True
+        if(0!=strcmp(save_type,isFloat((yyvsp[0].real)))){
+            printf("\nType mismatch: %s is a %s and %f is a %s",(yyvsp[-2].str),save_type,(yyvsp[0].real),isFloat((yyvsp[0].real)));
+        }
+        doubleDeclaration((yyvsp[-2].str));
+       if (!doubleDeclaration((yyvsp[-2].str)))
+        {
+            insererType((yyvsp[-2].str), save_type);
+            insererConst((yyvsp[-2].str),1);
+        }
+}
+#line 1440 "src/parser/codel-syn.tab.c"
+    break;
+
+  case 25: /* constant_declaration: CONST const_type ID  */
+#line 135 "src/parser/codel-syn.y"
+                                             { yyerror("Malformed constant declaration"); }
+#line 1446 "src/parser/codel-syn.tab.c"
+    break;
+
+  case 28: /* expression: operand operator expression  */
+#line 143 "src/parser/codel-syn.y"
                                     {
-            if(!strcmp(save_op,"div_op") && (yyvsp[0].entier) == 0){
+            if(!strcmp(save_op,"div_op") && (yyvsp[0].real) == 0){
                 printf("Semantic error: division on 0");
             }
         }
-#line 1433 "src/parser/codel-syn.tab.c"
+#line 1456 "src/parser/codel-syn.tab.c"
     break;
 
-  case 29: /* operator: MULT  */
-#line 137 "src/parser/codel-syn.y"
+  case 30: /* operator: MULT  */
+#line 152 "src/parser/codel-syn.y"
              { strcpy(save_op,"mult_op");}
-#line 1439 "src/parser/codel-syn.tab.c"
+#line 1462 "src/parser/codel-syn.tab.c"
     break;
 
-  case 30: /* operator: DIV  */
-#line 139 "src/parser/codel-syn.y"
+  case 31: /* operator: DIV  */
+#line 154 "src/parser/codel-syn.y"
             { strcpy(save_op,"div_op");}
-#line 1445 "src/parser/codel-syn.tab.c"
+#line 1468 "src/parser/codel-syn.tab.c"
     break;
 
-  case 31: /* operator: PLUS  */
-#line 141 "src/parser/codel-syn.y"
+  case 32: /* operator: PLUS  */
+#line 156 "src/parser/codel-syn.y"
              { strcpy(save_op,"add_op");}
-#line 1451 "src/parser/codel-syn.tab.c"
+#line 1474 "src/parser/codel-syn.tab.c"
     break;
 
-  case 32: /* operator: MINUS  */
-#line 143 "src/parser/codel-syn.y"
+  case 33: /* operator: MINUS  */
+#line 158 "src/parser/codel-syn.y"
               { strcpy(save_op,"sub_op");}
-#line 1457 "src/parser/codel-syn.tab.c"
+#line 1480 "src/parser/codel-syn.tab.c"
     break;
 
-  case 40: /* operand: ID  */
-#line 161 "src/parser/codel-syn.y"
+  case 41: /* operand: ID  */
+#line 176 "src/parser/codel-syn.y"
            {
             identificateurNonDecl((yyvsp[0].str));
             if(identificateurNonDecl((yyvsp[0].str))){
                             insererType((yyvsp[0].str),"UNDECLARED");
                         };
         }
-#line 1468 "src/parser/codel-syn.tab.c"
+#line 1491 "src/parser/codel-syn.tab.c"
     break;
 
-  case 44: /* instruction: assign_ins  */
-#line 176 "src/parser/codel-syn.y"
+  case 45: /* instruction: assign_ins  */
+#line 191 "src/parser/codel-syn.y"
                                      { yyerror("Missing SEMICOLON after assign instruction");}
-#line 1474 "src/parser/codel-syn.tab.c"
+#line 1497 "src/parser/codel-syn.tab.c"
     break;
 
-  case 49: /* assign_ins_bool: ID ASSIGN_OP bool_value  */
-#line 185 "src/parser/codel-syn.y"
+  case 50: /* assign_ins_bool: ID ASSIGN_OP bool_value  */
+#line 200 "src/parser/codel-syn.y"
                                             {
                         identificateurNonDecl((yyvsp[-2].str));
                         if(identificateurNonDecl((yyvsp[-2].str))){
@@ -1482,34 +1505,31 @@ yyreduce:
                         };
 
 }
-#line 1486 "src/parser/codel-syn.tab.c"
+#line 1509 "src/parser/codel-syn.tab.c"
     break;
 
-  case 50: /* assign_ins: ID ASSIGN_OP expression  */
-#line 194 "src/parser/codel-syn.y"
+  case 51: /* assign_ins: ID ASSIGN_OP expression  */
+#line 209 "src/parser/codel-syn.y"
                                             {
+                    if(0!=strcmp(getTypeByName((yyvsp[-2].str)),isFloat((yyvsp[0].real)))){
+                        printf("\nType mismatch: %s is a %s and %f is a %s",(yyvsp[-2].str),save_type,(yyvsp[0].real),isFloat((yyvsp[0].real)));
+                    }
                         identificateurNonDecl((yyvsp[-2].str));
                         if(identificateurNonDecl((yyvsp[-2].str))){
                             insererType((yyvsp[-2].str),"UNDECLARED");
                         };
                     }
-#line 1497 "src/parser/codel-syn.tab.c"
+#line 1523 "src/parser/codel-syn.tab.c"
     break;
 
-  case 52: /* assign_ins: ID INC  */
-#line 203 "src/parser/codel-syn.y"
-                            { printf((yyvsp[-1].str)); }
-#line 1503 "src/parser/codel-syn.tab.c"
-    break;
-
-  case 55: /* for_loop_head: FOR PARENTH_OPEN for_loop_head_init for_loop_head_cond for_loop_head_incr PARENTH_CLOSE  */
-#line 211 "src/parser/codel-syn.y"
+  case 56: /* for_loop_head: FOR PARENTH_OPEN for_loop_head_init for_loop_head_cond for_loop_head_incr PARENTH_CLOSE  */
+#line 229 "src/parser/codel-syn.y"
                                                                                                         { yyerror("Missing COMMAS in forloop head"); }
-#line 1509 "src/parser/codel-syn.tab.c"
+#line 1529 "src/parser/codel-syn.tab.c"
     break;
 
-  case 56: /* for_loop_head_init: ID ASSIGN_OP operand  */
-#line 214 "src/parser/codel-syn.y"
+  case 57: /* for_loop_head_init: ID ASSIGN_OP operand  */
+#line 232 "src/parser/codel-syn.y"
                                      {
                         identificateurNonDecl((yyvsp[-2].str));
                         if(identificateurNonDecl((yyvsp[-2].str))){
@@ -1518,11 +1538,11 @@ yyreduce:
                         
 
                  }
-#line 1522 "src/parser/codel-syn.tab.c"
+#line 1542 "src/parser/codel-syn.tab.c"
     break;
 
 
-#line 1526 "src/parser/codel-syn.tab.c"
+#line 1546 "src/parser/codel-syn.tab.c"
 
       default: break;
     }
@@ -1720,5 +1740,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 257 "src/parser/codel-syn.y"
+#line 275 "src/parser/codel-syn.y"
 

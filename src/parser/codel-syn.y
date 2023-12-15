@@ -29,7 +29,7 @@ int     boolean;
 %token PARENTH_OPEN PARENTH_CLOSE
 %token BRACKET_OPEN BRACKET_CLOSE
 %token ASSIGN_OP
-%token <entier>INTEGER 
+%token <real>INTEGER 
 %token <real>REAL   
 %token <str>ID
 %token COMMA SEMICOLON
@@ -42,7 +42,7 @@ int     boolean;
 %left EQUAL NOTEQUAL
 %left LESS GREATER LESSEQ GREATEQ
 
-%type <entier>expression
+%type <real>expression
 
 %start start
 %%
@@ -108,8 +108,23 @@ const_type:
             FLOAT {strcpy(save_type,$1);};
 
 constant_declaration:
-                         CONST const_type ID ASSIGN_OP const_value {
+                         CONST const_type ID ASSIGN_OP INTEGER {
     // Add the ID to the symbol table with type and isConstant set to True
+        if(0!=strcmp(save_type,isFloat($5))){
+            printf("\nType mismatch: %s is a %s and %f is a %s",$3,save_type,$5,isFloat($5));
+        }
+        doubleDeclaration($3);
+       if (!doubleDeclaration($3))
+        {
+            insererType($3, save_type);
+            insererConst($3,1);
+        }
+}
+| CONST const_type ID ASSIGN_OP REAL {
+    // Add the ID to the symbol table with type and isConstant set to True
+        if(0!=strcmp(save_type,isFloat($5))){
+            printf("\nType mismatch: %s is a %s and %f is a %s",$3,save_type,$5,isFloat($5));
+        }
         doubleDeclaration($3);
        if (!doubleDeclaration($3))
         {
@@ -192,6 +207,9 @@ assign_ins_bool:    ID ASSIGN_OP bool_value {
 
 assign_ins:
                     ID ASSIGN_OP expression {
+                    if(0!=strcmp(getTypeByName($1),isFloat($3))){
+                        printf("\nType mismatch: %s is a %s and %f is a %s",$1,save_type,$3,isFloat($3));
+                    }
                         identificateurNonDecl($1);
                         if(identificateurNonDecl($1)){
                             insererType($1,"UNDECLARED");
@@ -200,7 +218,7 @@ assign_ins:
                     |
                     assign_ins_bool;
                     |
-                     ID INC { printf($1); };
+                     ID INC ;
 
 for_loop_ins:
                    for_loop_head for_loop_body;

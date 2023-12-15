@@ -38,3 +38,7 @@ char* getTypeFromID(char* id);
 ////Les routines semantiques
 int doubleDeclaration(char entite[]);
 int identificateurNonDecl(char entite[]);
+
+const char* isFloat(double num);
+
+const char* getTypeByName(const char* entityName);

@@ -1,0 +1,7 @@
+INT Z;
+CONST INT Hello := 10.5 ;
+INT A;
+BEGIN 
+Hello++;
+A := 3.5 ;
+END
