@@ -38,7 +38,7 @@ void display_symbol_table()
         "\t|----------------------------------------------------------|\n"
     );
     int i = 0;
-    while (++i < symtab_index) 
+    while (i < symtab_index) {
  
  
  
@@ -50,6 +50,8 @@ void display_symbol_table()
             symtab[i].TypeEntite,
             symtab[i].estConstant
         );
+        i++;
+    }
     printf("\t ----------------------------------------------------------\n");
 }
 
